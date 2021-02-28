@@ -46,7 +46,7 @@ public class Signup extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.50:3306/travelers","newuser","1234");
+                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.50:3306/travelers","admin","pass123");
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into user(email,username,password) values ('" + email + "' ,'" + username + "' , '" + password + "' );");
             } catch (SQLException ex) {
