@@ -31,12 +31,23 @@ public class Signup extends AppCompatActivity {
             return 0;
         return 1;
     }
+    public int CNPCheck() {
+        EditText cnpView = (EditText) findViewById(R.id.cnp);
+        String cnp = cnpView.getText().toString();
+        if(cnp.length() != 13)
+            return 0;
+        return 1;
+    }
     public class setUpSQL implements Runnable{
         public void run () {
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
-            EditText userView = (EditText) findViewById(R.id.username);
-            String username = userView.getText().toString();
+            EditText cnpView = (EditText) findViewById(R.id.cnp);
+            String cnp = cnpView.getText().toString();
+            EditText lnView = (EditText) findViewById(R.id.last_name);
+            String last_name = lnView.getText().toString();
+            EditText fnView = (EditText) findViewById(R.id.first_name);
+            String first_name = fnView.getText().toString();
             EditText pass1View = (EditText) findViewById(R.id.password);
             String password = pass1View.getText().toString();
             try {
@@ -46,9 +57,9 @@ public class Signup extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.50:3306/travelers","admin","pass123");
+                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("insert into user(email,username,password) values ('" + email + "' ,'" + username + "' , '" + password + "' );");
+                stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "' , '" + password + "' ,'" + last_name + "' ,'" + first_name + "' ,'" + cnp + "' );");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
@@ -72,6 +83,11 @@ public class Signup extends AppCompatActivity {
             errorView.setText("Invalid email address");
             ok = false;
         }
+        if(CNPCheck()==0) {
+            TextView errorView = (TextView) findViewById(R.id.textView);
+            errorView.setText("Invalid CNP");
+            ok = false;
+        }
         if(PasswordCheck()==0) {
             TextView errorView = (TextView) findViewById(R.id.textView);
             errorView.setText("Password doesn't match!");
@@ -80,8 +96,10 @@ public class Signup extends AppCompatActivity {
         if(ok) {
             Thread sqlThread = new Thread(new setUpSQL());
             sqlThread.start();
-            EditText userView = (EditText)findViewById(R.id.username);
-            String username =userView.getText().toString();
+
+            //EditText userView = (EditText)findViewById(R.id.username);
+            //String username =userView.getText().toString();
+
             Intent intent = new Intent(this, MainActivity.class);
             //intent.putExtra(Menu.EXTRA_MESSAGE, username);
             startActivity(intent);
