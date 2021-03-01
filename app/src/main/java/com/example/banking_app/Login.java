@@ -49,8 +49,8 @@ public class Login extends AppCompatActivity {
     }
     public class checkSQL implements Runnable{
         public void run () {
-            EditText userView = (EditText) findViewById(R.id.username);
-            String username = userView.getText().toString();
+            EditText emailView = (EditText) findViewById(R.id.email);
+            String email = emailView.getText().toString();
             EditText passView = (EditText) findViewById(R.id.password);
             String password = passView.getText().toString();
             try {
@@ -60,12 +60,12 @@ public class Login extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.50:3306/customers","newuser","1234");
+                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select* from user");
+                ResultSet rs = stmt.executeQuery("select* from USER");
                 while (rs.next()&&ok==false) {
-                    Log.d("SQLTag", username + " " + password);
-                    if (username.equals(rs.getString(3)) && password.equals(rs.getString(4)))
+                    Log.d("SQLTag", email + " " + password);
+                    if (email.equals(rs.getString(2)) && password.equals(rs.getString(3)))
                         ok = true;
                 }
                 con.close();
@@ -83,7 +83,7 @@ public class Login extends AppCompatActivity {
 
         }
         if (ok) {
-            EditText nameView = (EditText) findViewById(R.id.username);
+            EditText nameView = (EditText) findViewById(R.id.email);
             String name = nameView.getText().toString();
             check=false;
             ok=false;
