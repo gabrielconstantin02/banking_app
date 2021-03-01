@@ -77,6 +77,7 @@ public class Login extends AppCompatActivity {
     public void onLogin(View view) {///Login button
         Thread sqlThread = new Thread(new checkSQL());
         sqlThread.start();
+        //wait until the sql statement is executed
         while(!check){
 
         }
@@ -90,7 +91,7 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
         } else {
             TextView errorView = (TextView) findViewById(R.id.error);
-            errorView.setText("Wrong username or password");
+            errorView.setText("Wrong email or password");
             check=false;
             ok=false;
         }

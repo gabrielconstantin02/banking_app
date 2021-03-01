@@ -24,6 +24,7 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
     }
+    //check validity of email
     public int EmailCheck() {
         EditText emailView = (EditText)findViewById(R.id.email);
         String email = emailView.getText().toString();
@@ -31,6 +32,7 @@ public class Signup extends AppCompatActivity {
             return 0;
         return 1;
     }
+    //check validity of CNP
     public int CNPCheck() {
         EditText cnpView = (EditText) findViewById(R.id.cnp);
         String cnp = cnpView.getText().toString();
@@ -40,6 +42,7 @@ public class Signup extends AppCompatActivity {
     }
     public class setUpSQL implements Runnable{
         public void run () {
+            // get the email EditText
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
             EditText cnpView = (EditText) findViewById(R.id.cnp);
@@ -48,15 +51,18 @@ public class Signup extends AppCompatActivity {
             String last_name = lnView.getText().toString();
             EditText fnView = (EditText) findViewById(R.id.first_name);
             String first_name = fnView.getText().toString();
+            // get the password EditText
             EditText pass1View = (EditText) findViewById(R.id.password);
             String password = pass1View.getText().toString();
             try {
+                //lookup the mysql module
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 Log.d("ClassTag", "Failed1");
             }
             try {
+                //add the new account to db
                 Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "' , '" + password + "' ,'" + last_name + "' ,'" + first_name + "' ,'" + cnp + "' );");
@@ -66,6 +72,7 @@ public class Signup extends AppCompatActivity {
             }
         }
     }
+    //confirm the password
     public int PasswordCheck() {
         EditText pass1View = (EditText)findViewById(R.id.password);
         String pass1 = pass1View.getText().toString();
@@ -74,6 +81,8 @@ public class Signup extends AppCompatActivity {
         if(!pass1.equals(pass2)){
             return 0;
         }
+        if(pass1.length()<5)
+            return 2;
         return 1;
     }
     public void onCreateAccount(View view) {
@@ -91,6 +100,11 @@ public class Signup extends AppCompatActivity {
         if(PasswordCheck()==0) {
             TextView errorView = (TextView) findViewById(R.id.textView);
             errorView.setText("Password doesn't match!");
+            ok = false;
+        }
+        if(PasswordCheck()==2) {
+            TextView errorView = (TextView) findViewById(R.id.textView);
+            errorView.setText("Password should have at least 5 characters!");
             ok = false;
         }
         if(ok) {
