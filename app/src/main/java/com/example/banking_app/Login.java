@@ -62,18 +62,16 @@ public class Login extends AppCompatActivity {
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select* from USER");
-                while (rs.next()&&ok==false) {
-                    Log.d("SQLTag", email + " " + password);
-                    if (email.equals(rs.getString(2)) && password.equals(rs.getString(3)))
-                        ok = true;
-                }
+                ResultSet rs = stmt.executeQuery("select* from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
+                rs.next();
+                if(rs.getString(1) != null)
+                    ok = true;
                 con.close();
-                check=true;
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
             }
+            check=true;
         }
     }
     public void onLogin(View view) {///Login button
