@@ -1,7 +1,7 @@
 # banking_app
 
 ## Descrierea proiectului
-Proiectul este o aplicație Android de banking ce permite crearea de conturi si depozite, efectuarea de tranzactii, asocierea/crearea de carduri, istoric al tranzactiilor(extras de cont), modificarea/acttualizarea detaliilor contului, setari ale contului .
+Proiectul este o aplicatie Android de banking ce permite crearea de conturi si depozite, efectuarea de tranzactii, asocierea/crearea de carduri, istoric al tranzactiilor(extras de cont), modificarea/acttualizarea detaliilor contului, setari ale contului. Pentru toate aceste stocari/interogari, aplicatia se foloseste de o baza de date MySQL
 
 Proiect realizat pentru disciplina "Metode de dezvoltare software" din cadrul Facultatii de Matematica si Informatica, Universitatea Bucuresti.
 
