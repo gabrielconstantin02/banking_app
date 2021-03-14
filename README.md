@@ -1,6 +1,9 @@
 # banking_app
 
-Proiect realizat pentru disciplina "Metode de dezvoltare software" din cadrul Facultatii de Matematica si Informatica, Universitatea București.
+## Descrierea proiectului
+Proiectul este o aplicație Android de banking ce permite crearea de conturi si depozite, efectuarea de tranzactii, asocierea/crearea de carduri, istoric al tranzactiilor(extras de cont), modificarea/acttualizarea detaliilor contului, setari ale contului .
+
+Proiect realizat pentru disciplina "Metode de dezvoltare software" din cadrul Facultatii de Matematica si Informatica, Universitatea Bucuresti.
 
 
 ## Backlog
@@ -15,6 +18,5 @@ Am realizat cateva diagrame temporare (una pentru aplicatie si una pentru baza d
 - **[Sociu Daniel](https://github.com/danielsociu)**
 
 
-## Descrierea proiectului
-Proiectul este o aplicație Android de banking ce permite crearea de conturi si depozite, efectuarea de tranzactii, asocierea/crearea de carduri, istoric al tranzactiilor(extras de cont), modificarea/acttualizarea detaliilor contului, setari ale contului .
+
 
