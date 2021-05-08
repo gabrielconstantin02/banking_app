@@ -1,74 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/borders"
+    android:id="@+id/accountLogItem"
+    android:layout_height="wrap_content"
+    android:paddingEnd="10dp"
+    android:paddingStart="5dp"
+    >
 
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="123dp">
-
-        <TableLayout
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/accountRoundImage"
+            android:layout_width="43dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="2dp"
+            android:src="@drawable/bank_account"
+            android:padding="7dp" />
+        <RelativeLayout
+            android:id="@+id/accountLogDataHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="60dp"
+            android:layout_toEndOf="@id/accountRoundImage"
+            android:paddingStart="10dp"
+            android:paddingEnd="0dp"
+            >
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Title" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/logRoundImage"
-                    android:layout_width="43dp"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dp"
+                    android:text="Description"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="7dp"
                     android:layout_marginEnd="2dp"
-                    android:padding="7dp" />
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="46dp"
-                            android:text="TextView" />
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="46dp"
-                            android:gravity="right"
-                            android:text="TextView" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="right"
-                        >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="42dp"
-                            android:paddingTop="10dp"
-                            android:gravity="right"
-                            android:text="TextView" />
-                    </TableRow>
-                </TableLayout>
-            </TableRow>
-
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-<!--here we will have the buttons/actions -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"></LinearLayout>
-            </TableRow>
-        </TableLayout>
-
-    </androidx.cardview.widget.CardView>
-</LinearLayout>
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:text="cash$" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/accountLogActionsHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accountLogDataHolder"
+            android:padding="5dp"
+            >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="2dp"
+                    android:gravity="center"
+                    android:text="buttons_to_add" />
+        </RelativeLayout>
+</RelativeLayout>
