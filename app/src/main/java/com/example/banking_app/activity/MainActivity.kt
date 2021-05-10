@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.banking_app.R
 import com.example.banking_app.fragments.OverviewFragment
 import com.example.banking_app.ui.main.SectionsPagerAdapter
+import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+
+        //val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
 
         // val viewPager: ViewPager = findViewById(R.id.container)
         // viewPager.adapter = sectionsPagerAdapter

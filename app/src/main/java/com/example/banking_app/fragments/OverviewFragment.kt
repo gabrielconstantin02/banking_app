@@ -11,6 +11,7 @@ class OverviewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false);
+        activity?.title = getString(R.string.nav_overview);
         return view;
     }
 }
