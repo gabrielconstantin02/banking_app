@@ -1,7 +1,9 @@
 package com.example.banking_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.banking_app.classes.User;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,6 +26,8 @@ import java.sql.Statement;
 public class Login extends AppCompatActivity {
     boolean ok=false;
     boolean check=false;
+    String name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +53,14 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
     public class checkSQL implements Runnable{
         public void run () {
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
             EditText passView = (EditText) findViewById(R.id.password);
             String password = passView.getText().toString();
+
             try {
                 Class.forName("com.mysql.jdbc.Driver");
             } catch (ClassNotFoundException e) {
@@ -60,9 +68,9 @@ public class Login extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
+                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6:3306/bank_db","root","");
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select* from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
+                ResultSet rs = stmt.executeQuery("select * from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
                 rs.next();
                 if(rs.getString(1) != null)
                     ok = true;
@@ -83,9 +91,16 @@ public class Login extends AppCompatActivity {
         }
         if (ok) {
             EditText nameView = (EditText) findViewById(R.id.email);
-            String name = nameView.getText().toString();
+            name = nameView.getText().toString();
             check=false;
             ok=false;
+            EditText emailViewsaved= (EditText) findViewById(R.id.email);
+            String emailsaved = emailViewsaved.getText().toString();
+            SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString("emailUser",emailsaved);
+            editor.commit();
+
             Intent intent = new Intent(this, MainActivity.class);
             //intent.putExtra(MainActivity.EXTRA_MESSAGE, name);
             startActivity(intent);

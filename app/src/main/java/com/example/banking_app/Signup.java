@@ -2,7 +2,9 @@ package com.example.banking_app;
 
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.example.banking_app.classes.User;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -63,9 +67,9 @@ public class Signup extends AppCompatActivity {
             }
             try {
                 //add the new account to db
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
+                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6/phpmyadmin/index.php?route=/database/structure&server=1&db=bank_db","root","");
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "' , '" + password + "' ,'" + last_name + "' ,'" + first_name + "' ,'" + cnp + "' );");
+                stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "', '" + password + "', '" + last_name + "', '" + first_name + "','" + cnp + "' );");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
@@ -110,12 +114,17 @@ public class Signup extends AppCompatActivity {
         if(ok) {
             Thread sqlThread = new Thread(new setUpSQL());
             sqlThread.start();
-
+            EditText emailViewsaved= (EditText) findViewById(R.id.email);
+            String emailsaved = emailViewsaved.getText().toString();
+            SharedPreferences sharedPreferences= getSharedPreferences("myPrefs",0);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString("emailUser",emailsaved);
+            editor.commit();
             //EditText userView = (EditText)findViewById(R.id.username);
             //String username =userView.getText().toString();
 
             Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra(Menu.EXTRA_MESSAGE, username);
+            intent.putExtra("extra_mail", emailsaved);
             startActivity(intent);
         }
     }
