@@ -5,4 +5,6 @@
     <string name="nav_overview">Overview</string>
     <string name="nav_payments">Payments</string>
     <string name="nav_profile">Profile</string>
+    <string name="overview_accounts">Accounts</string>
+    <string name="overview_cards">Cards</string>
 </resources>

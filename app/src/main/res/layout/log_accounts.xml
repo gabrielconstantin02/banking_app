@@ -2,10 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/borders"
     android:id="@+id/accountLogItem"
     android:layout_height="wrap_content"
+    android:background="@drawable/border_account_log"
     android:paddingEnd="10dp"
+    android:layout_margin="3dp"
     android:paddingStart="5dp"
     >
 
@@ -27,7 +28,7 @@
             >
 
                 <TextView
-                    android:id="@+id/ibanHolder"
+                    android:id="@+id/accountLogIban"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -35,16 +36,16 @@
                     android:text="Title" />
 
                 <TextView
-                    android:id="@+id/currencyHolder"
+                    android:id="@+id/accountLogCurrency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="5dp"
                     android:text="Description"
-                />
+                    />
 
                 <TextView
-                    android:id="@+id/balanceHolder"
+                    android:id="@+id/accountLogBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="2dp"
