@@ -27,7 +27,7 @@ import java.util.Properties;
 
 public class Login extends AppCompatActivity {
     boolean ok=false;
-    boolean check=false;
+    boolean check;
     String name;
 
     @Override
@@ -80,47 +80,47 @@ public class Login extends AppCompatActivity {
                         "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select * from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
-                rs.next();
-                if(rs.getString(1) != null)
-                    ok = true;
+                try {
+                    rs.next();
+                    if (rs.getString(1) != null)
+                        ok = true;
+                }
+                catch (Exception ignored){
+
+                }
                 con.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
             }
-            check=true;
         }
     }
-    public void onLogin(View view) {///Login button
-        Thread sqlThread = new Thread(new checkSQL());
-        sqlThread.start();
-        //wait until the sql statement is executed
-        while(!check){
+    public void onLogin(View view) throws InterruptedException {///Login button
+            Thread sqlThread = new Thread(new checkSQL());
+            sqlThread.start();
+            //wait until the sql statement is executed
+            sqlThread.join(0);
+            if (ok) {
+                EditText nameView = (EditText) findViewById(R.id.email);
+                name = nameView.getText().toString();
+                ok = false;
+                EditText emailViewsaved = (EditText) findViewById(R.id.email);
+                String emailsaved = emailViewsaved.getText().toString();
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("emailUser", emailsaved);
+                editor.commit();
 
-        }
-        if (ok) {
-            EditText nameView = (EditText) findViewById(R.id.email);
-            name = nameView.getText().toString();
-            check=false;
-            ok=false;
-            EditText emailViewsaved= (EditText) findViewById(R.id.email);
-            String emailsaved = emailViewsaved.getText().toString();
-            SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.putString("emailUser",emailsaved);
-            editor.commit();
-
-            Intent intent = new Intent(this, MainActivity.class);
-            // intent.putExtra(MainActivity.EXTRA_MESSAGE, name);
-            startActivity(intent);
-        } else {
-            TextView errorView = (TextView) findViewById(R.id.error);
-            errorView.setText("Wrong email or password");
-            check=false;
-            ok=false;
-        }
+                Intent intent = new Intent(this, MainActivity.class);
+                finish();
+                startActivity(intent);
+            } else {
+                TextView errorView = (TextView) findViewById(R.id.error);
+                errorView.setText("Wrong email or password");
+                ok = false;
+            }
     }
-    public void onSignup(View view) {                                ///Signup button
+    public void onSignup(View view) {///Signup button
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
     }
