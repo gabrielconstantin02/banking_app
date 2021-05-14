@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">banking_app</string>
-    <string name="tab_text_1">Home</string>
-    <string name="tab_text_2">Payments</string>
-    <string name="tab_text_3">Profile</string>
+    <string name="filler">TextView</string>
+    <string name="tab_text_1">Transactions</string>
+    <string name="tab_text_2">Cards</string>
+    <string name="tab_text_3">Details</string>
     <string name="name">Name</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
