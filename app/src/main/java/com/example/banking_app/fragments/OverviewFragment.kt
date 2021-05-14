@@ -91,6 +91,11 @@ class OverviewFragment : Fragment() {
     private fun addCards(inflater: LayoutInflater, location: LinearLayout, dataAccounts: List<Pair<Account, Currency>>) {
 
     }
-    //private fun loadAccounts() {}
+
+    // public class getAccountsFromDatabase: Runnable {
+    //     public void run() {
+
+    //     }
+    // }
 
 }
