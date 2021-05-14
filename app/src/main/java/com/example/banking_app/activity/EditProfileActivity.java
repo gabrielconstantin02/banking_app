@@ -1,27 +1,22 @@
-package com.example.banking_app;
+package com.example.banking_app.activity;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 
-import com.example.banking_app.classes.User;
+import com.example.banking_app.R;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class EditProfileActivity extends Activity {
     Button btnClose;
@@ -58,7 +53,12 @@ public class EditProfileActivity extends Activity {
     }
     public class getDataSQL implements Runnable{
         public void run () {
-
+            Properties databaseProp = new Properties();
+            try {
+                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -67,7 +67,8 @@ public class EditProfileActivity extends Activity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6:3306/bank_db","root","");
+                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
+                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select top 1 * from USER where email=\""+userEmail+"\"");
                 //rs.next();

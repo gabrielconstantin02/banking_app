@@ -13,14 +13,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.example.banking_app.classes.User;
+import com.example.banking_app.models.User;
+import com.example.banking_app.activity.MainActivity;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
+
 public class Signup extends AppCompatActivity {
 
     @Override
@@ -44,9 +46,15 @@ public class Signup extends AppCompatActivity {
             return 0;
         return 1;
     }
-    public class setUpSQL implements Runnable{
+    public class setUpSQL implements Runnable {
         public void run () {
             // get the email EditText
+            Properties databaseProp = new Properties();
+            try {
+                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
             EditText cnpView = (EditText) findViewById(R.id.cnp);
@@ -67,7 +75,8 @@ public class Signup extends AppCompatActivity {
             }
             try {
                 //add the new account to db
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6/phpmyadmin/index.php?route=/database/structure&server=1&db=bank_db","root","");
+                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
+                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "', '" + password + "', '" + last_name + "', '" + first_name + "','" + cnp + "' );");
             } catch (SQLException ex) {

@@ -1,10 +1,12 @@
 package com.example.banking_app.ui.main
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.banking_app.*
+import com.example.banking_app.fragments.OverviewFragment
+import com.example.banking_app.fragments.PaymentsFragment
+import com.example.banking_app.fragments.ProfileFragment
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,

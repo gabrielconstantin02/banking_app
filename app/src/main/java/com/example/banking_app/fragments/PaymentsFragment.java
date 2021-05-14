@@ -1,14 +1,18 @@
-package com.example.banking_app;
+package com.example.banking_app.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.banking_app.R;
+import com.example.banking_app.activity.AddPaymentActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +44,8 @@ public class PaymentsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_payments, container, false);
+        FragmentActivity activity = getActivity();
+        activity.setTitle(R.string.nav_payments);
         TextView textView=view.findViewById(R.id.section_label);
         return view;
 

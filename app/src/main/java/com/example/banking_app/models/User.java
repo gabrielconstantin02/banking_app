@@ -1,4 +1,4 @@
-package com.example.banking_app.classes;
+package com.example.banking_app.models;
 
 import android.app.Application;
 

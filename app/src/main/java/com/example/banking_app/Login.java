@@ -15,13 +15,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.banking_app.classes.User;
+import com.example.banking_app.activity.MainActivity;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class Login extends AppCompatActivity {
     boolean ok=false;
@@ -56,6 +58,12 @@ public class Login extends AppCompatActivity {
 
     public class checkSQL implements Runnable{
         public void run () {
+            Properties databaseProp = new Properties();
+            try {
+                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
             EditText passView = (EditText) findViewById(R.id.password);
@@ -68,7 +76,8 @@ public class Login extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6:3306/bank_db","root","");
+                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
+                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select * from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
                 rs.next();
@@ -102,7 +111,7 @@ public class Login extends AppCompatActivity {
             editor.commit();
 
             Intent intent = new Intent(this, MainActivity.class);
-            //intent.putExtra(MainActivity.EXTRA_MESSAGE, name);
+            // intent.putExtra(MainActivity.EXTRA_MESSAGE, name);
             startActivity(intent);
         } else {
             TextView errorView = (TextView) findViewById(R.id.error);

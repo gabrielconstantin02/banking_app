@@ -1,4 +1,4 @@
-package com.example.banking_app;
+package com.example.banking_app.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,12 +8,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.banking_app.R;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 public class AddPaymentActivity extends AppCompatActivity {
 
@@ -30,6 +34,13 @@ public class AddPaymentActivity extends AppCompatActivity {
     }
     public class setUpSQL implements Runnable{
         public void run () {
+            Properties databaseProp = new Properties();
+            try {
+                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             // get the DATA EditText
             EditText fromView = (EditText) findViewById(R.id.from);
             String from = fromView.getText().toString();
@@ -40,7 +51,7 @@ public class AddPaymentActivity extends AppCompatActivity {
             EditText amountView = (EditText) findViewById(R.id.amount);
             float amount = Float.parseFloat(amountView.getText().toString());
             Date date=new Date();
-            SimpleDateFormat formatter=new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
             //formatter.format(date)
             try {
                 //lookup the mysql module
@@ -50,10 +61,11 @@ public class AddPaymentActivity extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
+                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 //add the new account to db
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.0.245:3306/bank_db","monty","some123");
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("insert into TRANSACTION(sender_id, receiver_id, date, amount  ) values ('" + from + "' , '" + send + "' ,'" + formatter.format(date) + "' ,'" + amount + "' );");
+                stmt.executeUpdate("insert into TRANSACTION(sender_id, receiver_id, date, amount  ) values ('" + from + "' , '" + send + "' ,'" + formatter.format(date) + "' ,'" + amount + "');");
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");

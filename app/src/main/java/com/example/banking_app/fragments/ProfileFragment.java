@@ -1,39 +1,35 @@
-package com.example.banking_app;
+package com.example.banking_app.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import com.example.banking_app.R;
+import com.example.banking_app.activity.EditProfileActivity;
 
 public class ProfileFragment extends Fragment {
-
     Button btnEditProfile;
     Button btnSettings;
     Button btnAbout;
-    String user_email;
+    private String user_email;
     View view;
-    TextView txtAccountName;
+    private TextView txtAccountName;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -48,13 +44,16 @@ public class ProfileFragment extends Fragment {
         user_email=getActivity().getIntent().getStringExtra("extra_mail");
         setvalues();
 
+        FragmentActivity activity = getActivity();
+        activity.setTitle(R.string.nav_profile);
+
         return view;
     }
 
     private void setvalues(){
-
         txtAccountName.setText(user_email);
     }
+
     public void onEditProfile(View view) {                                ///Signup button
         Intent intent = new Intent(getActivity(), EditProfileActivity.class);
         intent.putExtra("extra_mail", user_email);
