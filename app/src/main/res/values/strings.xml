@@ -21,4 +21,7 @@
     <string name="nav_profile">Profile</string>
     <string name="overview_accounts">Accounts</string>
     <string name="overview_cards">Cards</string>
+    <string name="transactions_title">Transactions</string>
+    <string name="cards_title">Cards</string>
+    <string name="details_title">Details</string>
 </resources>

@@ -1,20 +1,26 @@
 package com.example.banking_app.activity
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.banking_app.R
-import com.example.banking_app.ui.main.SectionsPagerAdapter
+import com.example.banking_app.adapters.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 
-class AccountDetails: AppCompatActivity() {
+class AccountDetailsActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_details);
 
         val bundle: Bundle? = intent.extras;
         val accountIban: String? = bundle?.getString("iban");
+
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbarAccountDetails)
+        toolbar.title = "Account: $accountIban";
+        toolbar.setNavigationIcon(R.drawable.back_arrow);
+        toolbar.setNavigationOnClickListener{
+            finish();
+        }
 
         println(accountIban)
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
