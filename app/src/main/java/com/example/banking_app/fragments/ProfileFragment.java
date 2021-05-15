@@ -1,6 +1,7 @@
 package com.example.banking_app.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,11 +16,13 @@ import android.widget.TextView;
 import com.example.banking_app.R;
 import com.example.banking_app.activity.EditProfileActivity;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ProfileFragment extends Fragment {
     Button btnEditProfile;
     Button btnSettings;
     Button btnAbout;
-    private String user_email;
+    String user_email;
     View view;
     private TextView txtAccountName;
 
@@ -43,7 +46,9 @@ public class ProfileFragment extends Fragment {
         txtAccountName=view.findViewById(R.id.tv_name);
         user_email=getActivity().getIntent().getStringExtra("extra_mail");
         setvalues();
-
+        SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
+        editor.putString("email", user_email);
+        editor.apply();
         FragmentActivity activity = getActivity();
         activity.setTitle(R.string.nav_profile);
 
@@ -54,8 +59,8 @@ public class ProfileFragment extends Fragment {
         txtAccountName.setText(user_email);
     }
 
-    public void onEditProfile(View view) {                                ///Signup button
-        Intent intent = new Intent(getActivity(), EditProfileActivity.class);
+    public void onEditProfile(View view) {
+        Intent intent = new Intent(this.getActivity(), EditProfileActivity.class);
         intent.putExtra("extra_mail", user_email);
         startActivity(intent);
     }

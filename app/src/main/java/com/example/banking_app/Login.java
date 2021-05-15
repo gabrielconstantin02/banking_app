@@ -113,7 +113,11 @@ public class Login extends AppCompatActivity {
 
                 Intent intent = new Intent(this, MainActivity.class);
                 finish();
+                intent.putExtra("extra_mail", emailsaved);
                 startActivity(intent);
+
+
+
             } else {
                 TextView errorView = (TextView) findViewById(R.id.error);
                 errorView.setText("Wrong email or password");
