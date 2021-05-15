@@ -1,6 +1,7 @@
 package com.example.banking_app.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -23,10 +24,10 @@ public class EditProfileActivity extends Activity {
     View view;
     String s="user";
     Boolean check=false;
+//    SharedPreferences prefs = getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE);
     //SharedPreferences sharedPreferences= getSharedPreferences("myPrefs",0);
-    String userEmail="user";
-            //sharedPreferences.getString("emailUser","");
-            //PreferenceManager.getDefaultSharedPreferences().getString("emailUser","user");
+    String userEmail= "ceva";
+    Boolean ok=false;
     EditText txtCNP;
     EditText txtEmail;
     EditText txtLn;
@@ -45,9 +46,9 @@ public class EditProfileActivity extends Activity {
         txtEmail=findViewById(R.id.email);
         txtLn =findViewById(R.id.last_name);
         txtFn=findViewById(R.id.first_name);
-
+        userEmail= this.getIntent().getStringExtra("extra_mail");
         setData();
-        getWindow().setLayout((int)(width*.8),(int)(height*.7));
+        getWindow().setLayout((int)(width*.8),(int)(height*.8));
 
 
     }
@@ -66,23 +67,34 @@ public class EditProfileActivity extends Activity {
                 e.printStackTrace();
                 Log.d("ClassTag", "Failed1");
             }
+            txtCNP=findViewById(R.id.cnp);
+            txtEmail=findViewById(R.id.email);
+            txtLn =findViewById(R.id.last_name);
+            txtFn=findViewById(R.id.first_name);
+
             try {
                 Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
                         "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select top 1 * from USER where email=\""+userEmail+"\"");
-                //rs.next();
 
-                txtEmail.setText("Ceva");
-                txtLn.setText("test");
-                txtFn.setText("test");
-                txtCNP.setText("test");
+                ResultSet rs = stmt.executeQuery("select * from USER where email=\""+userEmail+"\"");
+                try {
+                    rs.next();
+
+                        txtLn.setText(rs.getString("last_name"));
+                        txtFn.setText(rs.getString("first_name"));
+                        txtCNP.setText(rs.getString("cnp"));
+                        ok=true;
+
+                }
+                catch (Exception ignored){
+
+                }
                 con.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
             }
-            check=true;
         }
     }
     public class setUpSQL implements Runnable{
@@ -91,15 +103,18 @@ public class EditProfileActivity extends Activity {
             EditText emailView = (EditText) findViewById(R.id.email);
             String email1 = emailView.getText().toString();
             EditText cnpView = (EditText) findViewById(R.id.cnp);
-            String cnp1 = cnpView.getText().toString();
+            String cnp1 = "1234123412341";
             EditText lnView = (EditText) findViewById(R.id.last_name);
             String last_name1 = lnView.getText().toString();
             EditText fnView = (EditText) findViewById(R.id.first_name);
             String first_name1 = fnView.getText().toString();
             // get the password EditText
-            EditText pass1View = (EditText) findViewById(R.id.password);
-            String password1 = pass1View.getText().toString();
-
+            Properties databaseProp = new Properties();
+            try {
+                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             try {
                 //lookup the mysql module
                 Class.forName("com.mysql.jdbc.Driver");
@@ -109,9 +124,11 @@ public class EditProfileActivity extends Activity {
             }
             try {
                 //add the new account to db
-                Connection con = DriverManager.getConnection("jdbc:mysql://192.168.1.6:3306/bank_db","root","");
+                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
+                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("UPDATE USER SET email=" + email1 +", password="+password1+", last_name="+last_name1+", first_name="+first_name1+", cnp="+cnp1 +  " where email=\""+userEmail+"\"");
+                stmt.executeUpdate("UPDATE USER SET email=\"" + email1 +"\", last_name=\""+last_name1+"\", first_name=\""+first_name1+"\", cnp=\""+cnp1 +  "\" where email=\""+userEmail+"\"");
+                ok=true;
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
@@ -120,16 +137,18 @@ public class EditProfileActivity extends Activity {
     }
     public void setData(){
 
-        txtEmail.setText("Ceva");
-        txtLn.setText("test");
-        txtFn.setText("test");
-        txtCNP.setText("test");
+        txtEmail.setText(userEmail);
+        Thread sqlThread = new Thread(new getDataSQL());
+        sqlThread.start();
+        while (ok!=true){}
+        ok=false;
     }
     public void onEditPop(View view){
-        userEmail=getIntent().getStringExtra("extra_email");
+        //userEmail=getIntent().getStringExtra("test@test.com");
         Thread sqlThread = new Thread(new setUpSQL());
         sqlThread.start();
-        finish();
+        while (ok!=true){}
+            finish();
     }
     public void onClose(View view)
     {
