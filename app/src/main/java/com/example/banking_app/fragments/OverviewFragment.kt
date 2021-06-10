@@ -1,6 +1,7 @@
 package com.example.banking_app.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,18 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.banking_app.R
+import com.example.banking_app.activity.AccountDetailsActivity
 import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
 
 class OverviewFragment : Fragment() {
+    // val getAccountsFromDatabase = object : Runnable {
+    //     override fun run() {
+    //         val connection: Connection = DatabaseConnection.getConnection();
+    //         val stmt: Statement = connection.createStatement();
+    //     }
+    // }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false);
@@ -84,13 +93,17 @@ class OverviewFragment : Fragment() {
             val balanceText: TextView = hold.findViewById(R.id.accountLogBalance);
             balanceText.text = account.getBalance().toString() + " " + currency.getName();
 
+            hold.setOnClickListener {
+                val accountDetailsIntent = Intent(context, AccountDetailsActivity::class.java);
+
+                val bundle = Bundle();
+                bundle.putString("iban", account.getIban());
+                accountDetailsIntent.putExtras(bundle);
+
+                startActivity(accountDetailsIntent);
+            }
+
             location.addView(hold);
         }
     }
-
-    private fun addCards(inflater: LayoutInflater, location: LinearLayout, dataAccounts: List<Pair<Account, Currency>>) {
-
-    }
-    //private fun loadAccounts() {}
-
 }

@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginTop="5dp"
-                    android:text="Title" />
+                    android:text="@string/filler" />
 
                 <TextView
                     android:id="@+id/accountLogCurrency"
@@ -41,7 +41,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="5dp"
-                    android:text="Description"
+                    android:text="@string/filler"
                     />
 
                 <TextView
@@ -51,20 +51,20 @@
                     android:layout_marginEnd="2dp"
                     android:layout_alignParentEnd="true"
                     android:gravity="center"
-                    android:text="cash$" />
+                    android:text="@string/filler" />
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/accountLogActionsHolder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/accountLogDataHolder"
-            android:padding="5dp"
-            >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="2dp"
-                    android:gravity="center"
-                    android:text="buttons_to_add" />
-        </RelativeLayout>
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/accountLogActionsHolder"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/accountLogDataHolder"-->
+<!--            android:padding="5dp"-->
+<!--            >-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginEnd="2dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="@string/filler" />-->
+<!--        </RelativeLayout>-->
 </RelativeLayout>
