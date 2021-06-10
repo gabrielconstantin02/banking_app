@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/accountLogItem"
+    android:layout_height="wrap_content"
+    android:background="@drawable/border_account_log"
+    android:paddingEnd="10dp"
+    android:layout_margin="3dp"
+    android:paddingStart="5dp"
+    >
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/accountRoundImage"
+        android:layout_width="43dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="2dp"
+        android:src="@drawable/bank_account"
+        android:padding="7dp" />
+
+    <RelativeLayout
+        android:id="@+id/accountLogDataHolder"
+        android:layout_width="336dp"
+        android:layout_height="90dp"
+        android:layout_toEndOf="@id/accountRoundImage"
+        android:paddingStart="10dp"
+        android:paddingEnd="0dp">
+
+        <TextView
+            android:id="@+id/cardLogId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/filler" />
+
+        <TextView
+            android:id="@+id/cardLogCVV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="5dp"
+            android:text="@string/filler" />
+
+        <TextView
+            android:id="@+id/cardLogType"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:gravity="center"
+            android:text="@string/filler" />
+
+        <TextView
+            android:id="@+id/cardLogValidity"
+            android:layout_width="125dp"
+            android:layout_height="36dp"
+            android:layout_above="@+id/cardLogCVV2"
+            android:layout_below="@+id/CardLogId"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/filler" />
+    </RelativeLayout>
+    <!--        <RelativeLayout-->
+    <!--            android:id="@+id/accountLogActionsHolder"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@id/accountLogDataHolder"-->
+    <!--            android:padding="5dp"-->
+    <!--            >-->
+    <!--                <TextView-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginEnd="2dp"-->
+    <!--                    android:gravity="center"-->
+    <!--                    android:text="@string/filler" />-->
+    <!--        </RelativeLayout>-->
+</RelativeLayout>

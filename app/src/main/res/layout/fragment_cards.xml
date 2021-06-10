@@ -9,12 +9,22 @@
         android:layout_height="wrap_content"
         style="@style/bigTitle"
         android:text="@string/cards_title" />
-
     <Button
         android:id="@+id/btnGenCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onGenerateCard"
         android:text="Generate a new card" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/overviewHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
