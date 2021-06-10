@@ -27,7 +27,7 @@ CREATE TABLE `ACCOUNT` (
   `user_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `bic` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `balance` int(11) NOT NULL,
+  `balance` decimal (10,2) NOT NULL,
   PRIMARY KEY (`iban`),
   KEY `fk_ACCOUNT_1_idx` (`user_id`),
   KEY `FK_currency_account_idx` (`currency_id`),
@@ -53,9 +53,9 @@ DROP TABLE IF EXISTS `CARD`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CARD` (
-  `card_number` int(16) NOT NULL,
+  `card_number` VARCHAR(16) NOT NULL,
   `iban` varchar(24) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `CCV2` int(11) NOT NULL,
+  `CCV2` varchar(11) NOT NULL,
   `type` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `valid_thru` datetime NOT NULL,
   PRIMARY KEY (`card_number`),
