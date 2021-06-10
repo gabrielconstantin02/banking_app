@@ -1,6 +1,7 @@
 package com.example.banking_app.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -25,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class GenerateCardActivity extends Activity {
 
@@ -35,7 +38,7 @@ public class GenerateCardActivity extends Activity {
     Date date=new Date();
     Spinner spinner;
 
-    public String genCardNumber(String iban, Date date, String type){
+    public String genCardNumber(String iban, String type){
         String t;
         if (type.equals("Visa Classic")){
             t="1";
@@ -44,8 +47,11 @@ public class GenerateCardActivity extends Activity {
         }  else{
           t="3";
         }
+        Date date=new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-        return (t + iban.substring(0, 3) + formatter.format(date) + iban.substring(iban.length()-4));
+        int rand_int1 = ThreadLocalRandom.current().nextInt(100, 1000);
+        int rand_int2 = ThreadLocalRandom.current().nextInt(10, 100);
+        return (t + rand_int1 + iban.substring(0, 2) + formatter.format(date).substring(2) + iban.substring(iban.length()-2) + rand_int2);
     }
 
 
@@ -97,7 +103,7 @@ public class GenerateCardActivity extends Activity {
             EditText cvv2View = (EditText) findViewById(R.id.cvv2);
             String cvv2 = cvv2View.getText().toString();
 
-            cardNumber = genCardNumber(iban, date, type);
+            cardNumber = genCardNumber(iban, type);
             Properties databaseProp = new Properties();
             try {
                 databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
@@ -128,7 +134,10 @@ public class GenerateCardActivity extends Activity {
         Thread sqlThread = new Thread(new GenerateCardActivity.setUpSQL());
         sqlThread.start();
         while (ok!=true){}
+        Intent i = getIntent(); //get the intent that has been called, i.e you did called with startActivityForResult();
+        setResult(Activity.RESULT_OK, i);
         finish();
+
     }
     public void onClose(View view)
     {
