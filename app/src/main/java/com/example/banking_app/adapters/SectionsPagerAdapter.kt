@@ -1,12 +1,10 @@
-package com.example.banking_app.ui.main
+package com.example.banking_app.adapters
 
 import android.content.Context
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.banking_app.*
-import com.example.banking_app.fragments.OverviewFragment
-import com.example.banking_app.fragments.PaymentsFragment
-import com.example.banking_app.fragments.ProfileFragment
+import com.example.banking_app.fragments.*
 
 private val TAB_TITLES = arrayOf(
     R.string.tab_text_1,
@@ -25,9 +23,9 @@ class SectionsPagerAdapter(
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int) = when (position) {
-        0 -> OverviewFragment()
-        1 -> PaymentsFragment()
-        2 -> ProfileFragment()
+        0 -> TransactionsFragment()
+        1 -> CardsFragment()
+        2 -> DetailsFragment()
         else -> error("Unknown")
     }
 
