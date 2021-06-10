@@ -64,8 +64,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     fun onEditProfile(view: View?) {                                ///EditProfilebutton
-        val intent = Intent(this, EditProfileActivity::class.java)
-        startActivity(intent)
+        val intent1 = Intent(this, EditProfileActivity::class.java)
+        intent1.putExtra("extra_mail",userMail);
+        startActivity(intent1)
     }
 
     fun onAddPay(view: View?) {                                ///onAddPaymentbutton

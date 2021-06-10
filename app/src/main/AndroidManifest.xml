@@ -11,9 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Banking_app">
-        <activity android:name=".activity.AddPaymentActivity" />
-        <activity android:name=".activity.EditProfileActivity" />
+
         <activity android:name=".activity.AccountDetailsActivity" />
+
+        <activity android:name=".activity.AddPaymentActivity" android:theme="@style/Theme.Banking_app.popUpStyle">
+
+        </activity>
+        <activity android:name=".activity.EditProfileActivity" android:theme="@style/Theme.Banking_app.popUpStyle">
+        </activity>
+
         <activity
             android:name=".Login"
             android:label="@string/app_name">
