@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.banking_app.R;
 
@@ -102,7 +103,16 @@ public class GenerateCardActivity extends Activity {
             SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd");
             EditText cvv2View = (EditText) findViewById(R.id.cvv2);
             String cvv2 = cvv2View.getText().toString();
-
+            if (cvv2.length()!=3) {
+                TextView errorView = (TextView) findViewById(R.id.error);
+                errorView.setText("The CVV2 should have 3 digits!");
+                return;
+            }
+            if (type == null || type.isEmpty()){
+                TextView errorView = (TextView) findViewById(R.id.error);
+                errorView.setText("Please select the type of the card!");
+                return;
+            }
             cardNumber = genCardNumber(iban, type);
             Properties databaseProp = new Properties();
             try {
@@ -130,13 +140,18 @@ public class GenerateCardActivity extends Activity {
         }
     }
 
-    public void onGenPop(View view){
+    public void onGenPop(View view) throws InterruptedException {
         Thread sqlThread = new Thread(new GenerateCardActivity.setUpSQL());
         sqlThread.start();
-        while (ok!=true){}
-        Intent i = getIntent(); //get the intent that has been called, i.e you did called with startActivityForResult();
-        setResult(Activity.RESULT_OK, i);
-        finish();
+        sqlThread.join(0);
+        if(ok) {
+            Intent i = getIntent(); //get the intent that has been called, i.e you did called with startActivityForResult();
+            setResult(Activity.RESULT_OK, i);
+            finish();
+        }
+        else{
+            date=new Date();
+        }
 
     }
     public void onClose(View view)

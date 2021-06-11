@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.banking_app.R
 import com.example.banking_app.activity.GenerateCardActivity
@@ -31,9 +28,9 @@ class CardsFragment: Fragment() {
     val iban = "12312AA2313"
     val LAUNCH_SECOND_ACTIVITY = 1
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_cards, container, false);
         val btn_gen_card = view.findViewById(R.id.btnGenCard) as Button
@@ -62,11 +59,8 @@ class CardsFragment: Fragment() {
                 }
                 ft.detach(this).attach(this).commit()
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                // Write your code if there's no result
-            }
         }
-    } //onActivityResult
+    }
 
 
     fun addYears(date: Date?, years: Int): Date? {
@@ -78,8 +72,8 @@ class CardsFragment: Fragment() {
 
     @SuppressLint("SetTextI18n", "ResourceType")
     private fun addCards(
-        inflater: LayoutInflater,
-        location: LinearLayout
+            inflater: LayoutInflater,
+            location: LinearLayout
     ) {
 
         val databaseProp = Properties()
@@ -99,12 +93,12 @@ class CardsFragment: Fragment() {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             val con: Connection = DriverManager.getConnection(
-                "jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty(
-                    "databasePort"
-                ) +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty(
-                    "databaseUsername"
-                ) + "&password=" + databaseProp.getProperty("databasePassword")
+                    "jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty(
+                            "databasePort"
+                    ) +
+                            "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty(
+                            "databaseUsername"
+                    ) + "&password=" + databaseProp.getProperty("databasePassword")
             ) as Connection
             Log.d("ClassTag", databaseProp.getProperty("databaseIP"))
             Log.d("ClassTag", databaseProp.getProperty("databaseName"))
@@ -112,7 +106,7 @@ class CardsFragment: Fragment() {
 
             val stmt = con.createStatement()
             val result: ResultSet = stmt.executeQuery(
-                "select * from CARD where iban = \"" + iban + "\";"
+                    "select * from CARD where iban = \"" + iban + "\";"
             )
             while(result.next()){
                 val hold: View = inflater.inflate(R.layout.log_cards, location, false);
@@ -132,30 +126,37 @@ class CardsFragment: Fragment() {
                 validityText.text = "Valid thru: " + validity.substring(0, 11)
 
                 hold.setOnClickListener {
-                    //val accountDetailsIntent = Intent(context, AccountDetailsActivity::class.java);
                     val popupMenu: PopupMenu = PopupMenu(activity, hold)
                     popupMenu.menuInflater.inflate(R.layout.card_popup_menu, popupMenu.menu)
                     popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                         when (item.itemId) {
                             R.id.renew_card -> {
+                                val formatterYear = SimpleDateFormat("yyyy")
+
                                 var date = Date()
                                 date = addYears(date, 3)!!
-                                val formatter = SimpleDateFormat("yyyy-MM-dd")
-                                val sql =
-                                    "update CARD set valid_thru = ? where card_number = ? and iban = ?"
-                                try {
-                                    val pstmt = con.prepareStatement(sql)
-                                    pstmt.setString(3, iban)
-                                    pstmt.setString(2, id)
-                                    pstmt.setString(1, formatter.format(date))
-                                    pstmt.executeUpdate()
-                                    val ft = requireFragmentManager().beginTransaction()
-                                    if (Build.VERSION.SDK_INT >= 26) {
-                                        ft.setReorderingAllowed(false)
+                                val old_year = validity.substring(2, 4).toInt()
+                                val new_year = formatterYear.format(date).substring(2, 4).toInt()
+                                if (old_year + 1 < new_year) {
+                                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                                    val sql =
+                                            "update CARD set valid_thru = ? where card_number = ? and iban = ?"
+                                    try {
+                                        val pstmt = con.prepareStatement(sql)
+                                        pstmt.setString(3, iban)
+                                        pstmt.setString(2, id)
+                                        pstmt.setString(1, formatter.format(date))
+                                        pstmt.executeUpdate()
+                                        val ft = requireFragmentManager().beginTransaction()
+                                        if (Build.VERSION.SDK_INT >= 26) {
+                                            ft.setReorderingAllowed(false)
+                                        }
+                                        ft.detach(this).attach(this).commit()
+                                    } catch (e: SQLException) {
+                                        e.printStackTrace()
                                     }
-                                    ft.detach(this).attach(this).commit()
-                                } catch (e: SQLException) {
-                                    e.printStackTrace()
+                                } else {
+                                    Toast.makeText(activity, "Your card is too new for a renewal !", Toast.LENGTH_SHORT).show()
                                 }
                             }
                             R.id.close_card -> {
@@ -178,11 +179,6 @@ class CardsFragment: Fragment() {
                         true
                     })
                     popupMenu.show()
-                //val bundle = Bundle();
-                    //bundle.putString("iban", account.getIban());
-                    //accountDetailsIntent.putExtras(bundle);
-
-                    //startActivity(accountDetailsIntent);
                 }
 
                 location.addView(hold);
