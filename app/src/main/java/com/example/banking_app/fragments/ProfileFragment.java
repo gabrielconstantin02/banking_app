@@ -30,7 +30,9 @@ public class ProfileFragment extends Fragment {
     Button btnSettings;
     Button btnAbout;
     String user_email;
+    String user_name;
     View view;
+    private TextView txtAccountEmail;
     private TextView txtAccountName;
     SharedPreferences mPrefs;
     SharedPreferences.Editor editor;
@@ -96,8 +98,10 @@ public class ProfileFragment extends Fragment {
         btnEditProfile=view.findViewById(R.id.editProfileButton);
         btnSettings=view.findViewById(R.id.settingsButton);
         btnAbout=view.findViewById(R.id.aboutButton);
-        txtAccountName=view.findViewById(R.id.tv_name);
+        txtAccountEmail=view.findViewById(R.id.email);
+        txtAccountName=view.findViewById(R.id.name);
         user_email=getActivity().getIntent().getStringExtra("extra_mail");
+        user_name="FirstName LastName";
         setvalues();
         SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
         editor.putString("email", user_email);
@@ -130,8 +134,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void setvalues(){
-        txtAccountName.setText(user_email);
-
+        txtAccountEmail.setText(user_email);
+        txtAccountName.setText(user_name);
     }
 
     public void onEditProfile(View view) {
