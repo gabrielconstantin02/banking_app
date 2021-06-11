@@ -30,7 +30,7 @@ public class AddPaymentActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getRealMetrics(dm);
         int width=dm.widthPixels;
         int height=dm.heightPixels;
-        getWindow().setLayout((int)(width*.8),(int)(height*.7));
+        getWindow().setLayout((int)(width*.8),(int)(height*.8));
     }
     public class setUpSQL implements Runnable{
         public void run () {
