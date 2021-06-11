@@ -16,9 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.banking_app.models.User;
 import com.example.banking_app.activity.MainActivity;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -66,6 +70,8 @@ public class Signup extends AppCompatActivity {
             // get the password EditText
             EditText pass1View = (EditText) findViewById(R.id.password);
             String password = pass1View.getText().toString();
+            String encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+            System.out.println(encryptedPassword);
             try {
                 //lookup the mysql module
                 Class.forName("com.mysql.jdbc.Driver");
@@ -75,10 +81,31 @@ public class Signup extends AppCompatActivity {
             }
             try {
                 //add the new account to db
+                String sql = "insert into USER(email, password, last_name, first_name, cnp) values (?, ?, ?, ?, ?);";
                 Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
                         "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
-                Statement stmt = con.createStatement();
-                stmt.executeUpdate("insert into USER(email, password, last_name, first_name, cnp  ) values ('" + email + "', '" + password + "', '" + last_name + "', '" + first_name + "','" + cnp + "' );");
+                PreparedStatement stmt = con.prepareStatement(sql,
+                        Statement.RETURN_GENERATED_KEYS);
+                stmt.setString(1, email);
+                stmt.setString(2, password);
+                stmt.setString(3, last_name);
+                stmt.setString(4, first_name);
+                stmt.setString(5, cnp);
+                stmt.executeQuery();
+                try (ResultSet generatedKey = stmt.getGeneratedKeys()) {
+                    if (generatedKey.next()) {
+                        int userId = generatedKey.getInt(1);
+                        MApplication.currentUser = new User(
+                                userId,
+                                email,
+                                last_name,
+                                first_name,
+                                cnp
+                        );
+                    } else {
+                        throw new SQLException("Failed to get the user id");
+                    }
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");

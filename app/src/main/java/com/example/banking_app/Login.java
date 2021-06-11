@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.banking_app.activity.MainActivity;
+import com.example.banking_app.models.User;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -81,9 +82,20 @@ public class Login extends AppCompatActivity {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select * from USER where email=\""+email+"\" and "+"password=\""+password+"\"");
                 try {
-                    rs.next();
-                    if (rs.getString(1) != null)
+                    if (rs.next()) {
                         ok = true;
+                        int userId = rs.getInt("user_id");
+                        String firstName = rs.getString("first_name");
+                        String lastName = rs.getString("last_name");
+                        String cnp = rs.getString("cnp");
+                        MApplication.currentUser = new User(
+                                userId,
+                                email,
+                                firstName,
+                                lastName,
+                                cnp
+                        );
+                    }
                 }
                 catch (Exception ignored){
 

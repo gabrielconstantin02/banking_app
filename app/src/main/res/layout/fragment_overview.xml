@@ -1,32 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black_5"
     tools:context=".fragments.OverviewFragment">
-    <LinearLayout
-        android:orientation="vertical"
+
+    <!--TODO: split accounts into accounts and deposits -->
+    <TextView
+        android:id="@+id/accountTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/overview_accounts"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--TODO: split accounts into accounts and deposits -->
-        <TextView
-            android:id="@+id/accountTitle"
-            style="@style/bigTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="@string/overview_accounts" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/accountTitle"
+        app:layout_constraintBottom_toTopOf="@id/createAccountButton"
+        >
+<!--        app:layout_constraintStart_toEndOf="@+id/accountTitle"-->
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
+            android:id="@+id/overviewHolder"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </androidx.core.widget.NestedScrollView>
 
-            <LinearLayout
-                android:id="@+id/overviewHolder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </androidx.core.widget.NestedScrollView>
-    </LinearLayout>
-</FrameLayout>
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:text="@string/account_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

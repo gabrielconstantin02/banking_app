@@ -1,15 +1,21 @@
 package com.example.banking_app.models;
 
-class Currency(currencyId: Int, name: String) {
-    private var mCurrencyId : Int = currencyId;
-    private var mName : String = name;
+data class Currency(
+    var currencyId: Int = 0,
+    var name: String = ""
+)
 
-    fun getCurrencyId () : Int {
-        return mCurrencyId;
-    }
+//class Currency(currencyId: Int, name: String) {
+//    private var mCurrencyId : Int = currencyId;
+//    private var mName : String = name;
+//
+//    fun getCurrencyId () : Int {
+//        return mCurrencyId;
+//    }
+//
+//    fun getName () : String {
+//        return mName;
+//    }
+//
+//}
 
-    fun getName () : String {
-        return mName;
-    }
-
-}
