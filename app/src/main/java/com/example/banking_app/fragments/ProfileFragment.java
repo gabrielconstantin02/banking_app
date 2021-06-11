@@ -2,11 +2,14 @@ package com.example.banking_app.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +18,70 @@ import android.widget.TextView;
 
 import com.example.banking_app.R;
 import com.example.banking_app.activity.EditProfileActivity;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment {
+    private static final int RESULT_OK = -1;
     Button btnEditProfile;
     Button btnSettings;
     Button btnAbout;
     String user_email;
     View view;
     private TextView txtAccountName;
+    SharedPreferences mPrefs;
+    SharedPreferences.Editor editor;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
+
+    int SELECT_PICTURE = 200;
+
+
+    void imageChooser() {
+
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            i.setAction(Intent.ACTION_GET_CONTENT);
+        } else {
+            i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == SELECT_PICTURE) {
+
+                Uri selectedImageUri = data.getData();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    getContext().getContentResolver().takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                }
+                SharedPreferences mPrefs = getActivity().getSharedPreferences("my_prefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = mPrefs.edit();
+                if (null != selectedImageUri) {
+                    CircleImageView profileImg = (CircleImageView) view.findViewById(R.id.profileImage);
+                    Picasso.get().load(selectedImageUri).into(profileImg);
+                    editor.putString("imageUri", String.valueOf(selectedImageUri));
+                    editor.apply();
+                    Log.d("UriTag", String.valueOf(selectedImageUri));
+                }
+            }
+        }
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,12 +104,34 @@ public class ProfileFragment extends Fragment {
         editor.apply();
         FragmentActivity activity = getActivity();
         activity.setTitle(R.string.nav_profile);
+        
+        CircleImageView circleImageView = (CircleImageView) view.findViewById(R.id.profileImage);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+            }
+        });
+
+        SharedPreferences mPrefs = getActivity().getSharedPreferences("my_prefs", MODE_PRIVATE);
+        String imageUri = mPrefs.getString("imageUri","0");
+        if (imageUri != null) {
+            Log.d("UriTag2", imageUri);
+            Uri selectedImageUri = Uri.parse(imageUri);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                getContext().getContentResolver().takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            }
+            Picasso.get().load(selectedImageUri).into(circleImageView);
+
+        }
 
         return view;
     }
 
+
     private void setvalues(){
         txtAccountName.setText(user_email);
+
     }
 
     public void onEditProfile(View view) {
