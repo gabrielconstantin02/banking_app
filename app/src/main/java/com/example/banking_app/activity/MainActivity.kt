@@ -79,4 +79,9 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         intent.putExtra("extra_mail", userMail)
         startActivity(intent)
     }
+    fun onChange(view: View?) {
+        val intent = Intent(this, ChangePwdActivity::class.java)
+        intent.putExtra("extra_mail", userMail)
+        startActivity(intent)
+    }
 }
