@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.banking_app.R;
+import com.example.banking_app.activity.ChangePwdActivity;
 import com.example.banking_app.activity.EditProfileActivity;
 import com.squareup.picasso.Picasso;
 
@@ -150,6 +151,11 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void onChange(View view) {
+        Intent intent = new Intent(this.getActivity(), ChangePwdActivity.class);
+        intent.putExtra("extra_mail", user_email);
+        startActivity(intent);
+    }
 }
 
 

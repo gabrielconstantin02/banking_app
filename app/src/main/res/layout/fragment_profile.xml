@@ -92,6 +92,7 @@
                     android:id="@+id/settingsButton"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:onClick="onChange"
                     android:text="@string/settings"/>
             </LinearLayout>
 

@@ -21,6 +21,7 @@
         <activity android:name=".activity.AddPaymentActivity" android:theme="@style/Theme.Banking_app.popUpStyle"/>
         <activity android:name=".activity.EditProfileActivity" android:theme="@style/Theme.Banking_app.popUpStyle"/>
         <activity android:name=".activity.AboutActivity" android:theme="@style/Theme.Banking_app.popUpStyle"/>
+        <activity android:name=".activity.ChangePwdActivity" android:theme="@style/Theme.Banking_app.popUpStyle"/>
         <activity android:name=".activity.GenerateCardActivity" android:theme="@style/Theme.Banking_app.popUpStyle"/>
 
         <activity

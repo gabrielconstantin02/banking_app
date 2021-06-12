@@ -103,7 +103,7 @@ public class EditProfileActivity extends Activity {
             EditText emailView = (EditText) findViewById(R.id.email);
             String email1 = emailView.getText().toString();
             EditText cnpView = (EditText) findViewById(R.id.cnp);
-            String cnp1 = "1234123412341";
+            String cnp1 = cnpView.getText().toString();
             EditText lnView = (EditText) findViewById(R.id.last_name);
             String last_name1 = lnView.getText().toString();
             EditText fnView = (EditText) findViewById(R.id.first_name);
