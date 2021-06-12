@@ -100,9 +100,6 @@ class CardsFragment: Fragment() {
                             "databaseUsername"
                     ) + "&password=" + databaseProp.getProperty("databasePassword")
             ) as Connection
-            Log.d("ClassTag", databaseProp.getProperty("databaseIP"))
-            Log.d("ClassTag", databaseProp.getProperty("databaseName"))
-            Log.d("ClassTag", databaseProp.getProperty("databasePassword"))
 
             val stmt = con.createStatement()
             val result: ResultSet = stmt.executeQuery(

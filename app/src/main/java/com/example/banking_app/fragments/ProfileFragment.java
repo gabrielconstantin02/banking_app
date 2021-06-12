@@ -144,6 +144,12 @@ public class ProfileFragment extends Fragment {
         startActivity(intent);
     }
 
+    public void onAbout(View view) {
+        Intent intent = new Intent(this.getActivity(), EditProfileActivity.class);
+        intent.putExtra("extra_mail", user_email);
+        startActivity(intent);
+    }
+
 }
 
 
