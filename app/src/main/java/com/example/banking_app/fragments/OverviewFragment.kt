@@ -20,17 +20,11 @@ import com.example.banking_app.config.DatabaseConnection
 import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
 import com.example.banking_app.models.Deposit
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.sql.*
 
 
 class OverviewFragment : Fragment() {
-    // val getAccountsFromDatabase = object : Runnable {
-    //     override fun run() {
-    //         val connection: Connection = DatabaseConnection.getConnection();
-    //         val stmt: Statement = connection.createStatement();
-    //     }
-    // }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false)
@@ -54,8 +48,8 @@ class OverviewFragment : Fragment() {
         }
 
         // Open account button
-        val accountButton: Button = view.findViewById(R.id.openAccount)
-        accountButton.setOnClickListener { view -> onCreateAccount(view) }
+        val accountButton: FloatingActionButton = view.findViewById(R.id.openAccount)
+        accountButton.setOnClickListener { viewParam -> onCreateAccount(viewParam) }
 
         return view
     }
@@ -81,6 +75,7 @@ class OverviewFragment : Fragment() {
 
                 val bundle = Bundle()
                 bundle.putString("iban", account.iban)
+                bundle.putString("type", "Account")
                 accountDetailsIntent.putExtras(bundle)
 
                 startActivity(accountDetailsIntent)
@@ -112,6 +107,7 @@ class OverviewFragment : Fragment() {
 
                 val bundle = Bundle()
                 bundle.putString("iban", account?.iban)
+                bundle.putString("type", "Deposit")
                 accountDetailsIntent.putExtras(bundle)
 
                 startActivity(accountDetailsIntent)

@@ -10,20 +10,34 @@
     <!--TODO: split accounts into accounts and deposits -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        >
         <!--        app:layout_constraintStart_toEndOf="@+id/accountTitle"-->
 
         <LinearLayout
             android:id="@+id/overviewHolder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
             android:orientation="vertical" />
     </androidx.core.widget.NestedScrollView>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openAccount"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_alignParentBottom="true"
-        android:text="@string/account_button" />
+        android:src="@drawable/baseline_add_white_24dp"
+        />
+<!--    <Button-->
+<!--        android:id="@+id/openAccount"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="@string/account_button" />-->
 </RelativeLayout>
