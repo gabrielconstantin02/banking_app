@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/logHolder"
+    android:layout_width="match_parent"
+    android:background="@drawable/border_log_holder"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20dp"
+    android:layout_margin="5dp"
+    >
+    <!--    android:background="@drawable/borders"-->
+
+    <TextView
+        android:id="@+id/holderTitle"
+        style="@style/bigTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/holder_title"
+        android:paddingStart="35dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingEnd="0dp"
+        />
+    <LinearLayout
+        android:id="@+id/logDataHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        />
+
+</LinearLayout>

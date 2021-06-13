@@ -15,8 +15,20 @@
     <string name="cnpEdit"></string>
     <string name="userName"></string>
 
+    <string name="open_account_paragraph">You can open a new account from the application right now. Just choose the currency you want for your account!</string>
+    <string name="open_account">Open account</string>
+    <string name="account">Account</string>
+    <string name="deposit">Deposit</string>
+    <string name="amount">Amount</string>
+    <string name="holder_title">Holder</string>
+    <string name="currency_label">Currency: </string>
+    <string name="months_label">Months: </string>
+    <string name="balance_label">Balance: </string>
+    <string name="account_type_label">Type: </string>
+    <string name="renewal_label">Renewal: </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_overview">Overview</string>
+    <string name="account_button">Open new account</string>
     <string name="nav_payments">Payments</string>
     <string name="nav_profile">Profile</string>
     <string name="overview_accounts">Accounts</string>

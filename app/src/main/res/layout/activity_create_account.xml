@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarCreateAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:textAlignment="center"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/open_account_paragraph"
+        style="@style/normalParagraph"
+        />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:columnCount="2"
+        android:rowCount="5"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/currency_label"
+            style="@style/baseLabel"
+            />
+
+        <Spinner
+            android:id="@+id/currencySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/balance_label"
+            style="@style/baseLabel"
+            />
+
+        <EditText
+            android:id="@+id/balanceInput"
+            android:inputType="numberDecimal"
+            android:maxWidth="100dp"
+            android:hint="@string/amount"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/account_type_label"
+            style="@style/baseLabel"
+            />
+
+        <RadioGroup
+            android:id="@+id/accountType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/radioAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusedByDefault="true"
+                android:checked="true"
+                android:text="@string/account"
+                android:textSize="16sp"
+                />
+            <RadioButton
+                android:id="@+id/radioDeposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deposit"
+
+                android:textSize="16sp"
+                />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/monthsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/months_label"
+            style="@style/baseLabel"
+            />
+
+        <Spinner
+            android:id="@+id/monthsSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/renewalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@string/renewal_label"
+            style="@style/baseLabel"
+            />
+        <CheckBox
+            android:id="@+id/renewalCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            />
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/openAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:text="@string/open_account"
+        />
+
+</LinearLayout>

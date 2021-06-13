@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id "kotlin-android-extensions"
 }
 
 android {
@@ -42,6 +43,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+    implementation "org.mindrot:jbcrypt:0.4"
     compile 'mysql:mysql-connector-java:5.1.+'
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.+'
