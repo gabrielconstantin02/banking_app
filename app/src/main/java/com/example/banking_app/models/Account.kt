@@ -5,7 +5,8 @@ data class Account(
     var userId: Int = 0,
     var currencyId: Int = 0,
     var bic: String = "",
-    var balance: Double = 0.0
+    var balance: Double = 0.0,
+    var currency: Currency?
 )
 
 //class Account(iban: String, user_id: Int, currency_id: Int, bic: String, balance: Int) {

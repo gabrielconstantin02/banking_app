@@ -20,6 +20,7 @@
     <string name="account">Account</string>
     <string name="deposit">Deposit</string>
     <string name="amount">Amount</string>
+    <string name="holder_title">Holder</string>
     <string name="currency_label">Currency: </string>
     <string name="months_label">Months: </string>
     <string name="balance_label">Balance: </string>
