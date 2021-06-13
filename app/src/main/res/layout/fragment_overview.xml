@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/accountTitle"
-        app:layout_constraintBottom_toTopOf="@id/createAccountButton"
+        app:layout_constraintBottom_toTopOf="@id/openAccount"
         >
 <!--        app:layout_constraintStart_toEndOf="@+id/accountTitle"-->
 
@@ -33,7 +33,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/createAccountButton"
+        android:id="@+id/openAccount"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"

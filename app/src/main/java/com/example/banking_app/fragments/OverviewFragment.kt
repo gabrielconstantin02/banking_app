@@ -19,10 +19,7 @@ import com.example.banking_app.activity.CreateAccountActivity
 import com.example.banking_app.config.DatabaseConnection
 import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
-import java.sql.Connection
-import java.sql.ResultSet
-import java.sql.SQLException
-import java.sql.Statement
+import java.sql.*
 
 
 class OverviewFragment : Fragment() {
@@ -38,16 +35,15 @@ class OverviewFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false)
         activity?.title = getString(R.string.nav_overview)
         val accountsLayout : LinearLayout = view.findViewById(R.id.overviewHolder)
-        val accountButton: Button = view.findViewById(R.id.createAccountButton)
-
-        accountButton.setOnClickListener { view -> onCreateAccount(view) }
-
-        // val mockData : MutableList<Pair<Account, Currency>> = mutableListOf()
-        // getMockData(mockData)
         val accountData : MutableList<Pair<Account, Currency>> = mutableListOf()
 
         getAccountsFromDatabase(accountData)
+        println(accountData.size)
         addAccounts(inflater, accountsLayout, accountData)
+
+        // Open account button
+        val accountButton: Button = view.findViewById(R.id.openAccount)
+        accountButton.setOnClickListener { view -> onCreateAccount(view) }
 
         return view
     }
@@ -82,12 +78,14 @@ class OverviewFragment : Fragment() {
 
     private fun getAccountsFromDatabase(dataList: MutableList<Pair<Account, Currency>>) {
         try {
+            val sql = "select * from ACCOUNT a, USER u, CURRENCY c where a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = ?";
             val policy = ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             val connection: Connection = DatabaseConnection.getConnection()
-            val statement: Statement = connection.createStatement()
-            val results: ResultSet = statement.executeQuery("select * from ACCOUNT a, USER u, CURRENCY c where" +
-                    "a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = " + MApplication.currentUser?.userId)
+            val statement: PreparedStatement = connection.prepareStatement(sql)
+            statement.setInt(1, MApplication.currentUser?.userId!!)
+            val results: ResultSet = statement.executeQuery()
+
             while (results.next()) {
                 dataList.add(Pair(
                     Account(
