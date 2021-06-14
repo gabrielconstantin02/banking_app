@@ -20,6 +20,7 @@ import com.example.banking_app.config.DatabaseConnection
 import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
 import com.example.banking_app.models.Deposit
+import com.example.banking_app.models.DepositType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.sql.*
 
@@ -150,7 +151,7 @@ class OverviewFragment : Fragment() {
 
     private fun getDepositsFromDatabase(dataList: MutableList<Deposit>) {
         try {
-            val sql = "select * from ACCOUNT a, USER u, CURRENCY c, DEPOSIT d where a.iban = d.iban and a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = ?;"
+            val sql = "select * from ACCOUNT a, USER u, CURRENCY c, DEPOSIT d, DEPOSIT_TYPE dt where dt.nr_months = d.nr_months and a.iban = d.iban and a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = ?;"
             val policy = ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             val connection: Connection = DatabaseConnection.getConnection()
@@ -175,6 +176,10 @@ class OverviewFragment : Fragment() {
                                 results.getInt("currency_id"),
                                 results.getString("name")
                             )
+                        ),
+                        DepositType(
+                            results.getInt("nr_months"),
+                            results.getDouble("interest_rate")
                         )
                     )
                 )

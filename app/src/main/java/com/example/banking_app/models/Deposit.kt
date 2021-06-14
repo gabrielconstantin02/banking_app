@@ -8,4 +8,5 @@ data class Deposit (
     var due_date: Date = Date(),
     var renewal: Boolean = false,
     var account: Account?,
-        )
+    var depositType: DepositType?
+)
