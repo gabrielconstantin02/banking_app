@@ -21,7 +21,7 @@
         <item name="windowNoTitle">true</item>
     </style>
     <style name="Theme.Banking_app.popUpStyle">
-        <item name="android:background">@color/black_80</item>
+        <item name="android:background">@color/white_alpha_10</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
 

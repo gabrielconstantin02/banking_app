@@ -14,17 +14,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
     private var userMail:String? =""
+    var PROFILE_CODE = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         userMail= intent.getStringExtra("extra_mail")
-        val toolbar = findViewById<Toolbar>(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
-        val navigationView = findViewById<BottomNavigationView>(R.id.navigationView);
-        navigationView.setOnNavigationItemSelectedListener(this);
+        val navigationView = findViewById<BottomNavigationView>(R.id.navigationView)
+        navigationView.setOnNavigationItemSelectedListener(this)
 
         // val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         // val viewPager : ViewPager = findViewById(R.id.view_pager)
@@ -45,33 +46,33 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.navigation_overview -> {
-                val fragment = OverviewFragment();
-                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-                return true;
+                val fragment = OverviewFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                return true
             }
             R.id.navigation_payments -> {
-                val fragment = PaymentsFragment();
-                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-                return true;
+                val fragment = PaymentsFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                return true
             }
             R.id.navigation_profile -> {
-                val fragment = ProfileFragment();
-                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-                return true;
+                val fragment = ProfileFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+                return true
             }
         }
-        return false;
+        return false
     }
 
-    fun onEditProfile(view: View?) {                                ///EditProfilebutton
-        val intent1 = Intent(this, EditProfileActivity::class.java)
-        intent1.putExtra("extra_mail", userMail);
-        startActivity(intent1)
-    }
-
+//    fun onEditProfile(view: View?) {                                ///EditProfilebutton
+//        val intent1 = Intent(this, EditProfileActivity::class.java)
+//        intent1.putExtra("extra_mail", userMail)
+//        startActivityForResult(intent1, PROFILE_CODE)
+//    }
+//
     fun onAddPay(view: View?) {                                ///onAddPaymentbutton
         val intent = Intent(this, AddPaymentActivity::class.java)
-        intent.putExtra("extra_mail", userMail);
+        intent.putExtra("extra_mail", userMail)
         startActivity(intent)
     }
     fun onAbout(view: View?) {

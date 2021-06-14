@@ -14,4 +14,14 @@
         <item name="android:paddingRight">5sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="baseDetailsLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">19sp</item>
+        <item name="android:padding">5sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="baseDetails" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">19sp</item>
+        <item name="android:padding">5sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.banking_app.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.banking_app.MApplication;
 import com.example.banking_app.R;
+import com.example.banking_app.models.User;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -49,7 +52,6 @@ public class EditProfileActivity extends Activity {
         userEmail= this.getIntent().getStringExtra("extra_mail");
         setData();
         getWindow().setLayout((int)(width*.8),(int)(height*.8));
-
 
     }
     public class getDataSQL implements Runnable{
@@ -128,7 +130,17 @@ public class EditProfileActivity extends Activity {
                         "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("UPDATE USER SET email=\"" + email1 +"\", last_name=\""+last_name1+"\", first_name=\""+first_name1+"\", cnp=\""+cnp1 +  "\" where email=\""+userEmail+"\"");
+                Intent i = getIntent();
+                setResult(Activity.RESULT_OK, i);
                 ok=true;
+                assert MApplication.currentUser != null;
+                MApplication.currentUser = new User(
+                       MApplication.currentUser.getUserId(),
+                       email1,
+                       last_name1,
+                       first_name1,
+                       cnp1
+                );
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
@@ -136,7 +148,6 @@ public class EditProfileActivity extends Activity {
         }
     }
     public void setData(){
-
         txtEmail.setText(userEmail);
         Thread sqlThread = new Thread(new getDataSQL());
         sqlThread.start();
@@ -148,11 +159,10 @@ public class EditProfileActivity extends Activity {
         Thread sqlThread = new Thread(new setUpSQL());
         sqlThread.start();
         while (ok!=true){}
-            finish();
+        finish();
     }
     public void onClose(View view)
     {
         finish();
-
     }
 }

@@ -33,14 +33,14 @@ class AccountsPagerAdapter(
         if (mType == "Deposit")  {
             return when (position) {
                 0 -> TransactionsFragment(mAccount.iban, mAccount.currency!!)
-                1 -> DetailsFragment()
+                1 -> DetailsFragment(mAccount, mType)
                 else -> error("Unknown")
             }
         }
         return when (position) {
             0 -> TransactionsFragment(mAccount.iban, mAccount.currency!!)
-            1 -> CardsFragment()
-            2 -> DetailsFragment()
+            1 -> CardsFragment(mAccount.iban)
+            2 -> DetailsFragment(mAccount, mType)
             else -> error("Unknown")
         }
 

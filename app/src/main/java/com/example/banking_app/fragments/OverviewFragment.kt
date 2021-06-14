@@ -1,7 +1,9 @@
 package com.example.banking_app.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -20,11 +22,13 @@ import com.example.banking_app.config.DatabaseConnection
 import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
 import com.example.banking_app.models.Deposit
+import com.example.banking_app.models.DepositType
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.sql.*
 
 
 class OverviewFragment : Fragment() {
+    val CREATE_ACCOUNT_CODE = 5
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false)
@@ -52,6 +56,19 @@ class OverviewFragment : Fragment() {
         accountButton.setOnClickListener { viewParam -> onCreateAccount(viewParam) }
 
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CREATE_ACCOUNT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val ft = requireFragmentManager().beginTransaction()
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false)
+                }
+                ft.detach(this).attach(this).commit()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -150,7 +167,7 @@ class OverviewFragment : Fragment() {
 
     private fun getDepositsFromDatabase(dataList: MutableList<Deposit>) {
         try {
-            val sql = "select * from ACCOUNT a, USER u, CURRENCY c, DEPOSIT d where a.iban = d.iban and a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = ?;"
+            val sql = "select * from ACCOUNT a, USER u, CURRENCY c, DEPOSIT d, DEPOSIT_TYPE dt where dt.nr_months = d.nr_months and a.iban = d.iban and a.user_id = u.user_id and c.currency_id = a.currency_id and u.user_id = ?;"
             val policy = ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             val connection: Connection = DatabaseConnection.getConnection()
@@ -175,6 +192,10 @@ class OverviewFragment : Fragment() {
                                 results.getInt("currency_id"),
                                 results.getString("name")
                             )
+                        ),
+                        DepositType(
+                            results.getInt("nr_months"),
+                            results.getDouble("interest_rate")
                         )
                     )
                 )
@@ -184,8 +205,8 @@ class OverviewFragment : Fragment() {
         }
     }
 
-    fun onCreateAccount(view: View?) {
-        startActivity(Intent(context, CreateAccountActivity::class.java))
+    private fun onCreateAccount(view: View?) {
+        startActivityForResult(Intent(context, CreateAccountActivity::class.java), CREATE_ACCOUNT_CODE)
     }
 
     private fun getMockData(dataList: MutableList<Account>) {
