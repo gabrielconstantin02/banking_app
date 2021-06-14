@@ -1,7 +1,9 @@
 package com.example.banking_app.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
@@ -26,6 +28,7 @@ import java.sql.*
 
 
 class OverviewFragment : Fragment() {
+    val CREATE_ACCOUNT_CODE = 5
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_overview, container, false)
@@ -53,6 +56,19 @@ class OverviewFragment : Fragment() {
         accountButton.setOnClickListener { viewParam -> onCreateAccount(viewParam) }
 
         return view
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CREATE_ACCOUNT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val ft = requireFragmentManager().beginTransaction()
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false)
+                }
+                ft.detach(this).attach(this).commit()
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -189,8 +205,8 @@ class OverviewFragment : Fragment() {
         }
     }
 
-    fun onCreateAccount(view: View?) {
-        startActivity(Intent(context, CreateAccountActivity::class.java))
+    private fun onCreateAccount(view: View?) {
+        startActivityForResult(Intent(context, CreateAccountActivity::class.java), CREATE_ACCOUNT_CODE)
     }
 
     private fun getMockData(dataList: MutableList<Account>) {

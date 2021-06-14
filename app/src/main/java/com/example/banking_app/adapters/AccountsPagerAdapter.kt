@@ -39,7 +39,7 @@ class AccountsPagerAdapter(
         }
         return when (position) {
             0 -> TransactionsFragment(mAccount.iban, mAccount.currency!!)
-            1 -> CardsFragment()
+            1 -> CardsFragment(mAccount.iban)
             2 -> DetailsFragment(mAccount, mType)
             else -> error("Unknown")
         }

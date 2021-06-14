@@ -2,22 +2,17 @@ package com.example.banking_app.activity
 
 import android.os.Bundle
 import android.os.StrictMode
-import android.text.format.DateUtils
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.banking_app.MApplication
 import com.example.banking_app.R
 import com.example.banking_app.config.DatabaseConnection
-import com.example.banking_app.models.Account
 import com.example.banking_app.models.Currency
 import com.example.banking_app.models.DepositType
-import com.google.android.material.snackbar.Snackbar
-import java.lang.StringBuilder
 import java.sql.*
 import java.time.LocalDate
 import java.util.*
-import java.util.Date
 
 class CreateAccountActivity: AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -172,6 +167,8 @@ class CreateAccountActivity: AppCompatActivity(), AdapterView.OnItemSelectedList
             depositStatement.setBoolean(4, renewal)
             depositStatement.executeUpdate()
         }
+
+        setResult(RESULT_OK, intent)
         finish()
     }
 

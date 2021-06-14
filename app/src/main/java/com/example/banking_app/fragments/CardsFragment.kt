@@ -23,10 +23,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CardsFragment: Fragment() {
+class CardsFragment(iban: String): Fragment() {
 
-    val iban = "12312AA2313"
-    val LAUNCH_SECOND_ACTIVITY = 1
+    private val mIban = iban
+    private val LAUNCH_SECOND_ACTIVITY = 1
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -36,11 +36,9 @@ class CardsFragment: Fragment() {
         val btn_gen_card = view.findViewById(R.id.btnGenCard) as Button
         btn_gen_card.setOnClickListener {
             val intent = Intent(this.activity, GenerateCardActivity::class.java)
-            intent.putExtra("extra_iban", iban)
-            //startActivity(intent)
+            intent.putExtra("extra_iban", mIban)
 
             startActivityForResult(intent, LAUNCH_SECOND_ACTIVITY);
-
         }
         val cardsLayout : LinearLayout = view.findViewById(R.id.overviewHolder);
 
@@ -49,7 +47,7 @@ class CardsFragment: Fragment() {
         return view;
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == LAUNCH_SECOND_ACTIVITY) {
             if (resultCode == Activity.RESULT_OK) {
@@ -103,7 +101,7 @@ class CardsFragment: Fragment() {
 
             val stmt = con.createStatement()
             val result: ResultSet = stmt.executeQuery(
-                    "select * from CARD where iban = \"" + iban + "\";"
+                    "select * from CARD where iban = \"" + mIban + "\";"
             )
             while(result.next()){
                 val hold: View = inflater.inflate(R.layout.log_cards, location, false);
@@ -140,7 +138,7 @@ class CardsFragment: Fragment() {
                                             "update CARD set valid_thru = ? where card_number = ? and iban = ?"
                                     try {
                                         val pstmt = con.prepareStatement(sql)
-                                        pstmt.setString(3, iban)
+                                        pstmt.setString(3, mIban)
                                         pstmt.setString(2, id)
                                         pstmt.setString(1, formatter.format(date))
                                         pstmt.executeUpdate()
@@ -160,7 +158,7 @@ class CardsFragment: Fragment() {
                                 val sql = "delete from CARD where card_number = ? and iban = ?"
                                 try {
                                     val pstmt = con.prepareStatement(sql)
-                                    pstmt.setString(2, iban)
+                                    pstmt.setString(2, mIban)
                                     pstmt.setString(1, id)
                                     pstmt.executeUpdate()
                                     val ft = requireFragmentManager().beginTransaction()

@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.banking_app.MApplication;
 import com.example.banking_app.R;
 import com.example.banking_app.activity.ChangePwdActivity;
 import com.example.banking_app.activity.EditProfileActivity;
+import com.example.banking_app.models.User;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,6 +37,7 @@ public class ProfileFragment extends Fragment {
     String user_email;
     String user_name;
     View view;
+    User user;
     private TextView txtAccountEmail;
     private TextView txtAccountName;
     SharedPreferences mPrefs;
@@ -43,6 +48,7 @@ public class ProfileFragment extends Fragment {
     }
 
     int SELECT_PICTURE = 200;
+    int PROFILE_CODE = 2;
 
 
     void imageChooser() {
@@ -64,10 +70,9 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-
             if (requestCode == SELECT_PICTURE) {
-
                 Uri selectedImageUri = data.getData();
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     getContext().getContentResolver().takePersistableUriPermission(selectedImageUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                 }
@@ -80,6 +85,12 @@ public class ProfileFragment extends Fragment {
                     editor.apply();
                     Log.d("UriTag", String.valueOf(selectedImageUri));
                 }
+            } else if (requestCode == PROFILE_CODE) {
+                FragmentTransaction ft = requireFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(this).attach(this).commit();
             }
         }
     }
@@ -97,18 +108,20 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_profile, container, false);
         btnEditProfile=view.findViewById(R.id.editProfileButton);
+        user = MApplication.currentUser;
         btnSettings=view.findViewById(R.id.settingsButton);
         btnAbout=view.findViewById(R.id.aboutButton);
         txtAccountEmail=view.findViewById(R.id.email);
         txtAccountName=view.findViewById(R.id.name);
         user_email=getActivity().getIntent().getStringExtra("extra_mail");
-        user_name="FirstName LastName";
+        user_name = user.getFirstName() + " " + user.getLastName();
         setvalues();
         SharedPreferences.Editor editor = this.getActivity().getSharedPreferences("MY_PREFS_NAME", MODE_PRIVATE).edit();
         editor.putString("email", user_email);
         editor.apply();
         FragmentActivity activity = getActivity();
         activity.setTitle(R.string.nav_profile);
+        btnEditProfile.setOnClickListener(this::onEditProfile);
         
         CircleImageView circleImageView = (CircleImageView) view.findViewById(R.id.profileImage);
         circleImageView.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +132,7 @@ public class ProfileFragment extends Fragment {
         });
 
         SharedPreferences mPrefs = getActivity().getSharedPreferences("my_prefs", MODE_PRIVATE);
-        String imageUri = mPrefs.getString("imageUri","0");
+        String imageUri = mPrefs.getString("imageUri",null);
         if (imageUri != null) {
             Log.d("UriTag2", imageUri);
             Uri selectedImageUri = Uri.parse(imageUri);
@@ -129,27 +142,19 @@ public class ProfileFragment extends Fragment {
             Picasso.get().load(selectedImageUri).into(circleImageView);
 
         }
-
         return view;
     }
-
 
     private void setvalues(){
         txtAccountEmail.setText(user_email);
         txtAccountName.setText(user_name);
     }
-
-    public void onEditProfile(View view) {
-        Intent intent = new Intent(this.getActivity(), EditProfileActivity.class);
-        intent.putExtra("extra_mail", user_email);
-        startActivity(intent);
+    public void onEditProfile(View view) {                                ///EditProfilebutton
+        Intent intent1 = new Intent(this.getActivity(), EditProfileActivity.class);
+        intent1.putExtra("extra_mail", user_email);
+        startActivityForResult(intent1, PROFILE_CODE);
     }
 
-    public void onAbout(View view) {
-        Intent intent = new Intent(this.getActivity(), EditProfileActivity.class);
-        intent.putExtra("extra_mail", user_email);
-        startActivity(intent);
-    }
 
     public void onChange(View view) {
         Intent intent = new Intent(this.getActivity(), ChangePwdActivity.class);
