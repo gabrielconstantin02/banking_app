@@ -231,3 +231,4 @@ public class PaymentsFragment extends Fragment {
         startActivity(intent);
     }
 }
+//ceva test
