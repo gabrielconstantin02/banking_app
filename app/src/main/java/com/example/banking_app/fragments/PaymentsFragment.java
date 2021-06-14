@@ -107,6 +107,8 @@ public class PaymentsFragment extends Fragment {
         userEmail=getActivity().getIntent().getStringExtra("extra_mail");
 
         //function for data load
+        userEmail=getActivity().getIntent().getStringExtra("extra_mail");
+
         setDataPays();
 
         mAdapter = new RecyclerAdapter(mDataset,fDataset,sDataset);
