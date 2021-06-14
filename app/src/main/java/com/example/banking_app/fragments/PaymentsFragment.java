@@ -102,8 +102,13 @@ public class PaymentsFragment extends Fragment {
                     .getSerializable(KEY_LAYOUT_MANAGER);
         }
         setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+        //getting current user email
+
+        userEmail=getActivity().getIntent().getStringExtra("extra_mail");
+
         //function for data load
         setDataPays();
+
         mAdapter = new RecyclerAdapter(mDataset,fDataset,sDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
@@ -128,7 +133,6 @@ public class PaymentsFragment extends Fragment {
         });
 */
 
-        userEmail=getActivity().getIntent().getStringExtra("extra_mail");
         return view;
 
     }
