@@ -20,6 +20,7 @@ import com.example.banking_app.R;
 import com.example.banking_app.activity.AddPaymentActivity;
 import com.example.banking_app.activity.EditProfileActivity;
 import com.example.banking_app.adapters.RecyclerAdapter;
+import com.example.banking_app.config.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -110,14 +111,19 @@ public class PaymentsFragment extends Fragment {
         userEmail=getActivity().getIntent().getStringExtra("extra_mail");
 
         setDataPays();
-
+        /*mDataset.add("ceva");
+        mDataset.add("ceva2");
+        fDataset.add("cevaf");
+        fDataset.add("ceva2f");
+        sDataset.add("cevas");
+        sDataset.add("ceva2s");*/
         mAdapter = new RecyclerAdapter(mDataset,fDataset,sDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
-        // mLinearLayoutRadioButton = (RadioButton) view.findViewById(R.id.linear_layout_rb);
-        /*
+         mLinearLayoutRadioButton = (RadioButton) view.findViewById(R.id.linear_layout_rb);
+
         mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -126,14 +132,13 @@ public class PaymentsFragment extends Fragment {
             }
         });
 
-        mGridLayoutRadioButton = (RadioButton) rootView.findViewById(R.id.grid_layout_rb);
+        mGridLayoutRadioButton = (RadioButton) view.findViewById(R.id.grid_layout_rb);
         mGridLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
             }
         });
-*/
 
         return view;
 
@@ -167,12 +172,6 @@ public class PaymentsFragment extends Fragment {
 
     public class getDataSQL implements Runnable{
         public void run () {
-            Properties databaseProp = new Properties();
-            try {
-                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -182,8 +181,7 @@ public class PaymentsFragment extends Fragment {
             }
 
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
+                Connection con = DatabaseConnection.getConnection();
                 Statement stmt = con.createStatement();
 
                 ResultSet rs = stmt.executeQuery("select * from USER where email=\""+userEmail+"\"");

@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.example.banking_app.MApplication;
 import com.example.banking_app.R;
+import com.example.banking_app.config.DatabaseConnection;
 import com.example.banking_app.models.User;
 
 import java.io.IOException;
@@ -56,12 +57,6 @@ public class EditProfileActivity extends Activity {
     }
     public class getDataSQL implements Runnable{
         public void run () {
-            Properties databaseProp = new Properties();
-            try {
-                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -75,8 +70,7 @@ public class EditProfileActivity extends Activity {
             txtFn=findViewById(R.id.first_name);
 
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
+                Connection con = DatabaseConnection.getConnection();
                 Statement stmt = con.createStatement();
 
                 ResultSet rs = stmt.executeQuery("select * from USER where email=\""+userEmail+"\"");

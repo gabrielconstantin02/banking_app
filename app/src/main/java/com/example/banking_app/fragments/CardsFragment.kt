@@ -14,6 +14,7 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.banking_app.R
 import com.example.banking_app.activity.GenerateCardActivity
+import com.example.banking_app.config.DatabaseConnection
 import java.io.IOException
 import java.sql.Connection
 import java.sql.DriverManager
@@ -74,12 +75,7 @@ class CardsFragment(iban: String): Fragment() {
             location: LinearLayout
     ) {
 
-        val databaseProp = Properties()
-        try {
-            databaseProp.load(javaClass.classLoader.getResourceAsStream("JDBCcredentials.properties"))
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+
         try {
             //lookup the mysql module
             Class.forName("com.mysql.jdbc.Driver").newInstance()
@@ -90,15 +86,7 @@ class CardsFragment(iban: String): Fragment() {
         try {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
-            val con: Connection = DriverManager.getConnection(
-                    "jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty(
-                            "databasePort"
-                    ) +
-                            "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty(
-                            "databaseUsername"
-                    ) + "&password=" + databaseProp.getProperty("databasePassword")
-            ) as Connection
-
+            val con: Connection = DatabaseConnection.getConnection()
             val stmt = con.createStatement()
             val result: ResultSet = stmt.executeQuery(
                     "select * from CARD where iban = \"" + mIban + "\";"

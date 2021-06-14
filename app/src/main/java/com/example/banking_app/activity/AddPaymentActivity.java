@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.banking_app.R;
+import com.example.banking_app.config.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -34,12 +35,6 @@ public class AddPaymentActivity extends AppCompatActivity {
     }
     public class setUpSQL implements Runnable{
         public void run () {
-            Properties databaseProp = new Properties();
-            try {
-                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             // get the DATA EditText
             EditText fromView = (EditText) findViewById(R.id.from);
@@ -61,8 +56,7 @@ public class AddPaymentActivity extends AppCompatActivity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
+                Connection con = DatabaseConnection.getConnection();
                 //add the new account to db
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into TRANSACTION(sender_id, receiver_id, date, amount  ) values ('" + from + "' , '" + send + "' ,'" + formatter.format(date) + "' ,'" + amount + "');");

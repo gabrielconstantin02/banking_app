@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.banking_app.config.DatabaseConnection;
 import com.example.banking_app.models.User;
 import com.example.banking_app.activity.MainActivity;
 
@@ -53,12 +54,7 @@ public class Signup extends AppCompatActivity {
     public class setUpSQL implements Runnable {
         public void run () {
             // get the email EditText
-            Properties databaseProp = new Properties();
-            try {
-                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
             EditText emailView = (EditText) findViewById(R.id.email);
             String email = emailView.getText().toString();
             EditText cnpView = (EditText) findViewById(R.id.cnp);
@@ -81,9 +77,9 @@ public class Signup extends AppCompatActivity {
             }
             try {
                 //add the new account to db
+
                 String sql = "insert into USER(email, password, last_name, first_name, cnp) values (?, ?, ?, ?, ?);";
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
+                Connection con=DatabaseConnection.getConnection();
                 PreparedStatement stmt = con.prepareStatement(sql,
                         Statement.RETURN_GENERATED_KEYS);
                 stmt.setString(1, email);

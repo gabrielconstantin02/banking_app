@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.banking_app.R;
+import com.example.banking_app.config.DatabaseConnection;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -114,12 +115,7 @@ public class GenerateCardActivity extends Activity {
                 return;
             }
             cardNumber = genCardNumber(iban, type);
-            Properties databaseProp = new Properties();
-            try {
-                databaseProp.load(getClass().getClassLoader().getResourceAsStream("JDBCcredentials.properties"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
             try {
                 //lookup the mysql module
                 Class.forName("com.mysql.jdbc.Driver");
@@ -128,8 +124,7 @@ public class GenerateCardActivity extends Activity {
                 Log.d("ClassTag", "Failed1");
             }
             try {
-                Connection con = DriverManager.getConnection("jdbc:mysql://" + databaseProp.getProperty("databaseIP") + ":" + databaseProp.getProperty("databasePort") +
-                        "/" + databaseProp.getProperty("databaseName") + "?user=" + databaseProp.getProperty("databaseUsername") + "&password=" + databaseProp.getProperty("databasePassword"));
+                Connection con = DatabaseConnection.getConnection();
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into CARD(card_number, iban, CCV2, type, valid_thru) values ('" + cardNumber + "' , '" + iban + "' , '" + cvv2 + "' , '" + type + "' ,'" + formatter.format(date) + "');");
                 ok=true;
