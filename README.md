@@ -24,14 +24,15 @@ User Stories (si implementarea lor):
 11. "Ar trebui implementata abilitatea de a vedea tranzactiile facute" -> [View transaction history](https://github.com/Kira060200/banking_app/issues/13)
 12. "As vrea sa reinnoiesc cardul sau sa il inchid fara a merge la banca" -> [Show cards associated with accounts, renew and close them](https://github.com/Kira060200/banking_app/issues/12)
 13. "Vrea sa deschid carduri direct din aplicatie" -> [Generate a new card](https://github.com/Kira060200/banking_app/issues/27)
-14. "As vrea un sistem de tipul extras de cont, cu toate detaliile despre contul selectat"[View bank account details](https://github.com/Kira060200/banking_app/issues/11) 
+14. "As vrea un sistem de tipul extras de cont, cu toate detaliile despre contul selectat" -> [View bank account details](https://github.com/Kira060200/banking_app/issues/11) 
 
 # UML 
 1. Use case diagram
 2. Class diagram
 
 # Database
-Diagrama pentru baza de date poate fi consultata [aici](https://imgur.com/Oay0MNT.jpg)
+Diagrama pentru baza de date poate fi consultata [aici](https://imgur.com/Oay0MNT.jpg). Imaginea este exportata si in proiect [aici](https://github.com/Kira060200/banking_app/blob/master/diagrama_mds.png)
+
 
 # Design & Flow
 Pentru a intelege mai bine cum functioneaza aplicatia si designul, am realizat [aceasta diagrama](https://whimsical.com/diagrama-aplicatie-banking-GiB6MivjnXyJjdwdnpqPxK) 
