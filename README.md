@@ -27,7 +27,7 @@ User Stories (si implementarea lor):
 14. "As vrea un sistem de tipul extras de cont, cu toate detaliile despre contul selectat" -> [View bank account details](https://github.com/Kira060200/banking_app/issues/11) 
 
 # UML 
-1. Use case diagram
+1. [Use case diagram](https://github.com/Kira060200/banking_app/blob/master/uml_use_diagram.jpeg)
 2. Class diagram
 
 # Database
