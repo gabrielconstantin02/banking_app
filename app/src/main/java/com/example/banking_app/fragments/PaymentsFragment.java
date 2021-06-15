@@ -1,10 +1,13 @@
 package com.example.banking_app.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +16,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.banking_app.MApplication;
 import com.example.banking_app.R;
 import com.example.banking_app.activity.AddPaymentActivity;
 import com.example.banking_app.activity.EditProfileActivity;
@@ -37,9 +42,9 @@ import java.util.Properties;
  * create an instance of this fragment.
  */
 public class PaymentsFragment extends Fragment {
-    View view;
     Boolean ok=false;
     String userEmail;
+    private int TRANSACTION_CODE = 10;
     private static final String TAG = "RecyclerViewFragment";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
@@ -83,7 +88,10 @@ public class PaymentsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_payments, container, false);
+        View view = inflater.inflate(R.layout.fragment_payments, container, false);
+        Button buttonPayment = view.findViewById(R.id.buttonPayment);
+
+        buttonPayment.setOnClickListener(this::onAddPay);
         FragmentActivity activity = getActivity();
         activity.setTitle(R.string.nav_payments);
         TextView textView=view.findViewById(R.id.section_label);
@@ -109,7 +117,10 @@ public class PaymentsFragment extends Fragment {
 
         //function for data load
 
-       setDataPays();
+        mDataset = new ArrayList<String>();
+        sDataset = new ArrayList<String>();
+        fDataset = new ArrayList<String>();
+        setDataPays();
 
 
         mAdapter = new RecyclerAdapter(mDataset,fDataset,sDataset);
@@ -121,6 +132,29 @@ public class PaymentsFragment extends Fragment {
         return view;
 
     }
+
+    private void onAddPay(View view) {                                ///onAddPaymentbutton
+        Intent intent = new Intent(getContext(), AddPaymentActivity.class);
+        assert MApplication.currentUser != null;
+        intent.putExtra("extra_mail", MApplication.currentUser.getEmail());
+        startActivityForResult(intent, TRANSACTION_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TRANSACTION_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                FragmentTransaction ft = requireFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(this).attach(this).commit();
+            }
+        }
+    }
+
+
     public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
         int scrollPosition = 0;
 
@@ -179,15 +213,10 @@ public class PaymentsFragment extends Fragment {
                         sDataset.add(rsDataPaysRec.getString("receiver_id"));
                         mDataset.add(rsDataPaysRec.getString("amount"));
                     }
-
-
-
                     ok=true;
-
                 }
                 catch (Exception ignored){
                     ok=true;
-
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -197,15 +226,10 @@ public class PaymentsFragment extends Fragment {
         }
     }
     public void setDataPays(){
-
         Thread sqlThread = new Thread(new getDataSQL());
         sqlThread.start();
-        while (ok!=true){}
+        while (!ok){}
         ok=false;
-    }
-    public void onAddPay(View view) {                                ///Signup button
-        Intent intent = new Intent(getActivity(), AddPaymentActivity.class);
-        startActivity(intent);
     }
 }
 //ceva test
