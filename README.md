@@ -5,6 +5,8 @@ Proiectul este o aplicatie Android de banking ce permite logare si crearea unui 
 
 Proiect realizat pentru disciplina "Metode de dezvoltare software" din cadrul Facultatii de Matematica si Informatica, Universitatea Bucuresti.
 
+# Demo aplicatie
+Demoul aplicatiei este incarcat pe Youtube [aici](https://youtu.be/OkaQZ3PAE9s)
 
 # Backlog & User Stories
 Backlog-ul poate fi consultat in [projects](https://github.com/Kira060200/banking_app/projects/2)
@@ -28,7 +30,7 @@ User Stories (si implementarea lor):
 
 # UML 
 1. [Use case diagram](https://github.com/Kira060200/banking_app/blob/master/uml_use_diagram.jpeg)
-2. Class diagram
+2. [Class diagram](https://github.com/Kira060200/banking_app/blob/master/ClassUML2.png) si un [overview asupra claselor](https://github.com/Kira060200/banking_app/blob/master/ClassUML3.png)
 
 # Database
 Diagrama pentru baza de date poate fi consultata [aici](https://imgur.com/Oay0MNT.jpg). 
