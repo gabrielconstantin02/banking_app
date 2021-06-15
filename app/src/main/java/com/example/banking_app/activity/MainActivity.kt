@@ -27,17 +27,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         val navigationView = findViewById<BottomNavigationView>(R.id.navigationView)
         navigationView.setOnNavigationItemSelectedListener(this)
 
-        // val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        // val viewPager : ViewPager = findViewById(R.id.view_pager)
-        // viewPager.adapter = sectionsPagerAdapter
-        // val tabs: TabLayout = findViewById(R.id.tabs)
-        // tabs.setupWithViewPager(viewPager)
-        // val fab: FloatingActionButton = findViewById(R.id.fab)
-        // fab.setOnClickListener { view ->
-        //     Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //             .setAction("Action", null).show()
-        // }
-
         if(savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(R.id.container, OverviewFragment()).commit()
         }
@@ -70,11 +59,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 //        startActivityForResult(intent1, PROFILE_CODE)
 //    }
 //
-    fun onAddPay(view: View?) {                                ///onAddPaymentbutton
-        val intent = Intent(this, AddPaymentActivity::class.java)
-        intent.putExtra("extra_mail", userMail)
-        startActivity(intent)
-    }
     fun onAbout(view: View?) {
         val intent = Intent(this, AboutActivity::class.java)
         intent.putExtra("extra_mail", userMail)

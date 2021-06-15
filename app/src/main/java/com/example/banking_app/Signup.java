@@ -78,7 +78,7 @@ public class Signup extends AppCompatActivity {
             try {
                 //add the new account to db
 
-                String sql = "insert into USER(email, password, last_name, first_name, cnp) values (?, ?, ?, ?, ?);";
+                String sql = "insert into USER(user_id, email, password, last_name, first_name, cnp) values (null, ?, ?, ?, ?, ?);";
                 Connection con=DatabaseConnection.getConnection();
                 PreparedStatement stmt = con.prepareStatement(sql,
                         Statement.RETURN_GENERATED_KEYS);
@@ -87,10 +87,14 @@ public class Signup extends AppCompatActivity {
                 stmt.setString(3, last_name);
                 stmt.setString(4, first_name);
                 stmt.setString(5, cnp);
-                stmt.executeQuery();
+                stmt.executeUpdate();
+                System.out.println("HEREEEE");
+                Log.d("SQLTag", "USR: ");
                 try (ResultSet generatedKey = stmt.getGeneratedKeys()) {
                     if (generatedKey.next()) {
                         int userId = generatedKey.getInt(1);
+                        System.out.println("NOt HERE");
+                        Log.d("SQLTag", "USEER: " + userId);
                         MApplication.currentUser = new User(
                                 userId,
                                 email,
@@ -121,7 +125,7 @@ public class Signup extends AppCompatActivity {
             return 2;
         return 1;
     }
-    public void onCreateAccount(View view) {
+    public void onCreateAccount(View view) throws InterruptedException {
         boolean ok = true;
         if(EmailCheck()==0) {
             TextView errorView = (TextView) findViewById(R.id.textView);
@@ -146,6 +150,7 @@ public class Signup extends AppCompatActivity {
         if(ok) {
             Thread sqlThread = new Thread(new setUpSQL());
             sqlThread.start();
+            sqlThread.join(0);
             EditText emailViewsaved= (EditText) findViewById(R.id.email);
             String emailsaved = emailViewsaved.getText().toString();
             SharedPreferences sharedPreferences= getSharedPreferences("myPrefs",0);

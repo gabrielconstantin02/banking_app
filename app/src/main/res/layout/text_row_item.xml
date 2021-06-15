@@ -15,7 +15,7 @@
          android:layout_height="60dp"
          android:layout_marginStart="7dp"
          android:layout_marginEnd="2dp"
-         android:src="@drawable/bank_account"
+         android:src="@drawable/dollar_icon"
          android:padding="7dp" />
      <RelativeLayout
          android:id="@+id/accountLogDataHolder"

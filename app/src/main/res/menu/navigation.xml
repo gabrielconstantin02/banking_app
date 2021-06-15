@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_payments"
-        android:icon="@drawable/bank_account"
+        android:icon="@drawable/dollar_icon"
         android:title="Payments"/>
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/bank_account"
+        android:icon="@drawable/profile_icon"
         android:title="Profile"/>
 
 </menu>

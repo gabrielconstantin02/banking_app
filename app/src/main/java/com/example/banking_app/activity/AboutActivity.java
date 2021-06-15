@@ -107,7 +107,6 @@ public class AboutActivity extends Activity {
                 catch (Exception ignored){
 
                 }
-                con.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 Log.d("SQLTag", "Failed to execute");
