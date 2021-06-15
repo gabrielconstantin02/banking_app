@@ -31,11 +31,11 @@ User Stories (si implementarea lor):
 2. Class diagram
 
 # Database
-Diagrama pentru baza de date poate fi consultata [aici](https://imgur.com/Oay0MNT.jpg). Imaginea este exportata si in proiect [aici](https://github.com/Kira060200/banking_app/blob/master/diagrama_mds.png)
-
+Diagrama pentru baza de date poate fi consultata [aici](https://imgur.com/Oay0MNT.jpg). 
 
 # Design & Flow
-Pentru a intelege mai bine cum functioneaza aplicatia si designul, am realizat [aceasta diagrama](https://whimsical.com/diagrama-aplicatie-banking-GiB6MivjnXyJjdwdnpqPxK) 
+Pentru a intelege mai bine cum functioneaza aplicatia si designul, am realizat [aceasta diagrama](https://whimsical.com/diagrama-aplicatie-banking-GiB6MivjnXyJjdwdnpqPxK). Imaginea este exportata si in proiect [aici](https://github.com/Kira060200/banking_app/blob/master/diagrama_mds.png)
+
 
 
 # Source control
