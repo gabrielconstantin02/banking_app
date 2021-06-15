@@ -189,7 +189,6 @@ public class PaymentsFragment extends Fragment {
                     ok=true;
 
                 }
-                con.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 ok=true;
