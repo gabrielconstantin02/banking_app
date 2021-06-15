@@ -49,6 +49,7 @@ Testele automate au fost realizate [aici](https://github.com/Kira060200/banking_
 1. [Database unavailable after payment](https://github.com/Kira060200/banking_app/issues/33)
 2. [Out of range value when inserting into card_number field](https://github.com/Kira060200/banking_app/issues/22)
 3. [Crash on twice failed login](https://github.com/Kira060200/banking_app/issues/18)
+4. [Wrong number of transactions in statistics](https://github.com/Kira060200/banking_app/issues/34)
 
 # Build tool
 
