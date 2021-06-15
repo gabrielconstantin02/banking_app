@@ -52,6 +52,7 @@ Testele automate au fost realizate [aici](https://github.com/Kira060200/banking_
 4. [Wrong number of transactions in statistics](https://github.com/Kira060200/banking_app/issues/34)
 
 # Build tool
+Ca build tool am folosit Gradle din Adnroid Studio IDE. Am creat de asemenea cu ajutorul lui si un apk pentru aplicatia noastra. Acesta poate fi gasit in acest [release](https://github.com/Kira060200/banking_app/releases/tag/V1.0)
 
 # Refactoring & Code standards
 La partea de refactoring, deoarece aveam nevoie de conexiune cu baza de date, in loc sa realizam aceasta conexiune in fiecare activitate din aplicatie avand mult cod in comun, am creat un [singleton care ne intoarce aceasta instanta de conexiune](https://github.com/Kira060200/banking_app/issues/32). Pentru code standards am urmat [guideline pentru Java de la Google](https://google.github.io/styleguide/javaguide.html)
