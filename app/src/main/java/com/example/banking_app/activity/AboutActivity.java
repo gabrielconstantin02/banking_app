@@ -95,9 +95,9 @@ public class AboutActivity extends Activity {
                     int nrTran = 0;
                     while(rs3.next()){
                         Statement stmt4 = con.createStatement();
-                        ResultSet rs4 = stmt4.executeQuery("select COUNT(*) AS count from TRANSACTION where sender_id="+ rs.getInt("user_id") + " or receiver_id="+ rs.getInt("user_id"));
+                        ResultSet rs4 = stmt4.executeQuery("select COUNT(transaction_id) AS counted from TRANSACTION where sender_id=\"" + rs3.getString("iban") + "\"");
                         rs4.next();
-                        nrTran += rs4.getInt("count");
+                        nrTran += rs4.getInt("counted");
                         stmt4.close();
                     }
                     txtTran.setText("Total number of transactions: " + nrTran);
