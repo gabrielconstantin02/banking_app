@@ -1,36 +1,109 @@
- <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:id="@+id/accountLogItem"
+    android:background="@drawable/borders"
+    android:layout_height="wrap_content"
+    android:paddingEnd="10dp"
+    android:paddingStart="5dp"
+    >
+
+     <de.hdodenhof.circleimageview.CircleImageView
+         android:id="@+id/accountRoundImage"
+         android:layout_width="43dp"
+         android:layout_height="60dp"
+         android:layout_marginStart="7dp"
+         android:layout_marginEnd="2dp"
+         android:src="@drawable/bank_account"
+         android:padding="7dp" />
+     <RelativeLayout
+         android:id="@+id/accountLogDataHolder"
+         android:layout_width="match_parent"
+         android:layout_height="60dp"
+         android:layout_toEndOf="@id/accountRoundImage"
+         android:paddingStart="10dp"
+         android:paddingEnd="0dp"
+         >
+
+          <TextView
+              android:id="@+id/textView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentTop="true"
+              android:layout_marginTop="5dp"
+              android:text="@string/filler" />
+
+          <TextView
+              android:id="@+id/textSent"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_marginBottom="5dp"
+              android:text="@string/filler"
+              />
+
+          <TextView
+              android:id="@+id/tvamount"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_alignParentEnd="true"
+              android:layout_marginEnd="37dp"
+              android:gravity="center"
+              android:text="@string/filler" />
+     </RelativeLayout>
+     <!--        <RelativeLayout-->
+     <!--            android:id="@+id/accountLogActionsHolder"-->
+     <!--            android:layout_width="match_parent"-->
+     <!--            android:layout_height="wrap_content"-->
+     <!--            android:layout_below="@id/accountLogDataHolder"-->
+     <!--            android:padding="5dp"-->
+     <!--            >-->
+     <!--                <TextView-->
+     <!--                    android:layout_width="wrap_content"-->
+     <!--                    android:layout_height="wrap_content"-->
+     <!--                    android:layout_marginEnd="2dp"-->
+     <!--                    android:gravity="center"-->
+     <!--                    android:text="@string/filler" />-->
+     <!--        </RelativeLayout>-->
+</RelativeLayout>
+
+
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp"
     android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginRight="20dp"
+     android:layout_marginTop="23dp"
     android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="from"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"/>
+     <TextView
+         android:id="@+id/textView"
+         android:layout_width="364dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="8dp"
+         android:layout_marginTop="8dp"
+         android:layout_marginEnd="8dp"
+         android:layout_marginBottom="0dp"
+         android:text="from" />
 
-    <TextView
-        android:id="@+id/tvamount"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="amount"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"/>
+     <TextView
+         android:id="@+id/tvamount"
+         android:layout_width="364dp"
+         android:layout_height="wrap_content"
+         android:layout_marginStart="8dp"
+         android:layout_marginTop="30dp"
+         android:layout_marginEnd="8dp"
+         android:layout_marginBottom="8dp"
+         android:text="amount" />
+
      <TextView
          android:id="@+id/textSent"
-         android:layout_width="100dp"
-         android:layout_height="wrap_content"
-         android:text="Sent"
+         android:layout_width="364dp"
+         android:layout_height="32dp"
          android:layout_marginStart="8dp"
          android:layout_marginTop="50dp"
          android:layout_marginEnd="8dp"
-         android:layout_marginBottom="8dp"/>
-</FrameLayout>
+         android:layout_marginBottom="0dp"
+         android:text="Sent" />
+</FrameLayout>-->

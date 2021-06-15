@@ -108,37 +108,15 @@ public class PaymentsFragment extends Fragment {
         userEmail=getActivity().getIntent().getStringExtra("extra_mail");
 
         //function for data load
-        userEmail=getActivity().getIntent().getStringExtra("extra_mail");
 
-        setDataPays();
-        /*mDataset.add("ceva");
-        mDataset.add("ceva2");
-        fDataset.add("cevaf");
-        fDataset.add("ceva2f");
-        sDataset.add("cevas");
-        sDataset.add("ceva2s");*/
+       setDataPays();
+
+
         mAdapter = new RecyclerAdapter(mDataset,fDataset,sDataset);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         // END_INCLUDE(initializeRecyclerView)
 
-         mLinearLayoutRadioButton = (RadioButton) view.findViewById(R.id.linear_layout_rb);
-
-        mLinearLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.LINEAR_LAYOUT_MANAGER);
-            }
-        });
-
-        mGridLayoutRadioButton = (RadioButton) view.findViewById(R.id.grid_layout_rb);
-        mGridLayoutRadioButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setRecyclerViewLayoutManager(LayoutManagerType.GRID_LAYOUT_MANAGER);
-            }
-        });
 
         return view;
 
@@ -188,13 +166,13 @@ public class PaymentsFragment extends Fragment {
                 try {
                     rs.next();
                     ResultSet rsDataPays=stmt.executeQuery("select * from TRANSACTION where sender_id in (select iban from ACCOUNT where user_id=\""+rs.getString("user_id")+"\")");
-                    ResultSet rsDataPaysRec=stmt.executeQuery("select * from TRANSACTION where receiver_id in (select iban from ACCOUNT where user_id=\""+rs.getString("user_id")+"\")");
                     while(rsDataPays.next())
                     {
                         fDataset.add(rsDataPays.getString("sender_id"));
                         sDataset.add(rsDataPays.getString("receiver_id"));
                         mDataset.add(rsDataPays.getString("amount"));
                     }
+                    ResultSet rsDataPaysRec=stmt.executeQuery("select * from TRANSACTION where receiver_id in (select iban from ACCOUNT where user_id=\""+rs.getString("user_id")+"\")");
                     while(rsDataPaysRec.next())
                     {
                         fDataset.add(rsDataPaysRec.getString("sender_id"));
@@ -208,11 +186,13 @@ public class PaymentsFragment extends Fragment {
 
                 }
                 catch (Exception ignored){
+                    ok=true;
 
                 }
                 con.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
+                ok=true;
                 Log.d("SQLTag", "Failed to execute");
             }
         }
