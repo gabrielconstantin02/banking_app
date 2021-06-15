@@ -94,7 +94,6 @@ public class PaymentsFragment extends Fragment {
         buttonPayment.setOnClickListener(this::onAddPay);
         FragmentActivity activity = getActivity();
         activity.setTitle(R.string.nav_payments);
-        TextView textView=view.findViewById(R.id.section_label);
         view.setTag(TAG);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
